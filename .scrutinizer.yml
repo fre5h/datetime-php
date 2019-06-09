@@ -1,0 +1,12 @@
+checks:
+  php: true
+
+filter:
+  paths:
+    - src/*
+  excluded_paths:
+    - vendor/*
+    - tests/*
+
+before_commands:
+  - "composer install --prefer-dist"
