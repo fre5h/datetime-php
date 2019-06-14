@@ -8,9 +8,10 @@ PHP library with additional functions for processing dates & times. :clock12: :c
 [![License](https://img.shields.io/packagist/l/fresh/datetime.svg?style=flat-square)](https://packagist.org/packages/fresh/datetime)
 [![Latest Stable Version](https://img.shields.io/packagist/v/fresh/datetime.svg?style=flat-square)](https://packagist.org/packages/fresh/datetime)
 [![Total Downloads](https://img.shields.io/packagist/dt/fresh/datetime.svg?style=flat-square)](https://packagist.org/packages/fresh/datetime)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/db89d80a-14af-4ae3-9a18-42accac9ff98.svg?style=flat-square)](https://insight.sensiolabs.com/projects/db89d80a-14af-4ae3-9a18-42accac9ff98)
 [![StyleCI](https://styleci.io/repos/190854938/shield?style=flat-square)](https://styleci.io/repos/190854938)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat-square)](https://gitter.im/fre5h/datetime-php)
+
+[![SymfonyInsight](https://insight.symfony.com/projects/db89d80a-14af-4ae3-9a18-42accac9ff98/mini.svg)](https://insight.symfony.com/projects/db89d80a-14af-4ae3-9a18-42accac9ff98)
 
 ## Contributing
 
