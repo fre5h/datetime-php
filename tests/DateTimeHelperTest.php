@@ -28,7 +28,7 @@ class DateTimeHelperTest extends TestCase
         $processedDate = DateTimeHelper::convertDateTimeToImmutable($date);
 
         self::assertInstanceOf(\DateTimeImmutable::class, $processedDate);
-        self::assertSame($date, $processedDate);
+        self::assertSame($date->getTimezone(), $processedDate->getTimezone());
     }
 
     public function testDateTimeObject(): void
@@ -37,6 +37,6 @@ class DateTimeHelperTest extends TestCase
         $processedDate = DateTimeHelper::convertDateTimeToImmutable($date);
 
         self::assertInstanceOf(\DateTimeImmutable::class, $processedDate);
-        self::assertSame($date->format('Y-m-d'), $processedDate->format('Y-m-d'));
+        self::assertSame($date->getTimezone(), $processedDate->getTimezone());
     }
 }

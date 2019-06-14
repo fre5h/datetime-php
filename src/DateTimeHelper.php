@@ -26,14 +26,6 @@ class DateTimeHelper
      */
     public static function convertDateTimeToImmutable(\DateTimeInterface $date): \DateTimeImmutable
     {
-        $result = null;
-
-        if ($date instanceof \DateTime) {
-            $result = \DateTimeImmutable::createFromMutable($date);
-        } elseif ($date instanceof \DateTimeImmutable) {
-            $result = $date;
-        }
-
-        return $result;
+        return \DateTimeImmutable::createFromFormat('U', $date->getTimestamp(), $date->getTimezone());
     }
 }
