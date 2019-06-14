@@ -6,7 +6,7 @@
          bootstrap="vendor/autoload.php"
 >
     <testsuites>
-        <testsuite name="Library Test Suite">
+        <testsuite name="DateTime Library Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
