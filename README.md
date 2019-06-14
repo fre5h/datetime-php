@@ -13,6 +13,14 @@ PHP library with additional functions for processing dates & times. :clock12: :c
 
 [![SymfonyInsight](https://insight.symfony.com/projects/db89d80a-14af-4ae3-9a18-42accac9ff98/big.svg)](https://insight.symfony.com/projects/db89d80a-14af-4ae3-9a18-42accac9ff98)
 
+## Requirements
+
+* PHP 7.1 *and later*
+
+## Install via Composer
+
+```composer req fresh/datetime```
+
 ## Contributing
 
 See [CONTRIBUTING](https://github.com/fre5h/datetime-php/blob/master/.github/CONTRIBUTING.md) file.
