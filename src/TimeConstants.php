@@ -19,8 +19,10 @@ namespace Fresh\DateTime;
  */
 final class TimeConstants
 {
-    public const NUMBER_OF_SECONDS_IN_MINUTE = 60;
-    public const NUMBER_OF_MINUTES_IN_HOUR = 60;
-    public const NUMBER_OF_HOURS_IN_DAY = 24;
-    public const NUMBER_OF_DAYS_IN_WEEK = 7;
+    public const NUMBER_OF_SECONDS_IN_A_MINUTE = 60;
+    public const NUMBER_OF_MINUTES_IN_AN_HOUR = 60;
+    public const NUMBER_OF_SECONDS_IN_AN_HOUR = self::NUMBER_OF_SECONDS_IN_A_MINUTE * self::NUMBER_OF_MINUTES_IN_AN_HOUR;
+    public const NUMBER_OF_HOURS_IN_A_DAY = 24;
+    public const NUMBER_OF_SECONDS_IN_A_DAY = self::NUMBER_OF_HOURS_IN_A_DAY * self::NUMBER_OF_SECONDS_IN_AN_HOUR;
+    public const NUMBER_OF_DAYS_IN_A_WEEK = 7;
 }
