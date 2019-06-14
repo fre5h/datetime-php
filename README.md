@@ -11,7 +11,7 @@ PHP library with additional functions for processing dates & times. :clock12: :c
 [![StyleCI](https://styleci.io/repos/190854938/shield?style=flat-square)](https://styleci.io/repos/190854938)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat-square)](https://gitter.im/fre5h/datetime-php)
 
-[![SymfonyInsight](https://insight.symfony.com/projects/db89d80a-14af-4ae3-9a18-42accac9ff98/mini.svg)](https://insight.symfony.com/projects/db89d80a-14af-4ae3-9a18-42accac9ff98)
+[![SymfonyInsight](https://insight.symfony.com/projects/db89d80a-14af-4ae3-9a18-42accac9ff98/small.svg)](https://insight.symfony.com/projects/db89d80a-14af-4ae3-9a18-42accac9ff98)
 
 ## Contributing
 
