@@ -26,10 +26,14 @@ class DateTimeHelper
      */
     public static function convertDateTimeToImmutable(\DateTimeInterface $date): \DateTimeImmutable
     {
-        if (!$date instanceof \DateTimeImmutable && $date instanceof \DateTime) {
-            return \DateTimeImmutable::createFromMutable($date);
+        $result = null;
+
+        if ($date instanceof \DateTime) {
+            $result = \DateTimeImmutable::createFromMutable($date);
+        } elseif ($date instanceof \DateTimeImmutable) {
+            $result = $date;
         }
 
-        return $date;
+        return $result;
     }
 }
