@@ -14,7 +14,7 @@ install:
     - composer install --dev --no-interaction --prefer-dist
 
 script:
-    - ./vendor/bin/phpcs ./ -p --encoding=utf-8 --extensions=php --ignore=vendor --ignore=tests --standard=PSR2
+    - ./vendor/bin/phpcs ./ -p --encoding=utf-8 --extensions=php --ignore=vendor --ignore=tests --standard=phpcs.xml
     - ./vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover=coverage.xml
     - ./vendor/bin/phpstan analyse -l 7 --no-progress -c phpstan.neon ./
 

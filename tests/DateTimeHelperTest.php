@@ -46,7 +46,7 @@ class DateTimeHelperTest extends TestCase
         $date = $this->createMock(\DateTimeInterface::class);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Date object is not instance of \DateTim');
+        $this->expectExceptionMessage('Date object is not instance of \DateTime');
 
         DateTimeHelper::convertDateTimeToImmutable($date);
     }
