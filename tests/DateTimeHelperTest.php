@@ -24,19 +24,19 @@ class DateTimeHelperTest extends TestCase
 {
     public function testImmutableDate(): void
     {
-        $date = new \DateTimeImmutable('1970-01-01');
+        $date = new \DateTimeImmutable('1970-01-01', new \DateTimeZone('UTC'));
         $processedDate = DateTimeHelper::convertDateTimeToImmutable($date);
 
         self::assertInstanceOf(\DateTimeImmutable::class, $processedDate);
-        self::assertEquals($date->getTimezone(), $processedDate->getTimezone());
+        self::assertEquals($date->getTimestamp(), $processedDate->getTimestamp());
     }
 
     public function testDateTimeObject(): void
     {
-        $date = new \DateTime('1970-01-01');
+        $date = new \DateTime('1970-01-01', new \DateTimeZone('UTC'));
         $processedDate = DateTimeHelper::convertDateTimeToImmutable($date);
 
         self::assertInstanceOf(\DateTimeImmutable::class, $processedDate);
-        self::assertEquals($date->getTimezone(), $processedDate->getTimezone());
+        self::assertEquals($date->getTimestamp(), $processedDate->getTimestamp());
     }
 }
