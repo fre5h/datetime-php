@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Fresh\DateTime;
 
-use Fresh\DateTime\Exception\InvalidArgumentException;
-
 /**
  * DateTimeHelper.
  *
@@ -24,18 +22,12 @@ class DateTimeHelper
     /**
      * @param \DateTimeInterface $date
      *
-     * @throws InvalidArgumentException
-     *
      * @return \DateTimeImmutable
      */
     public static function convertDateTimeToImmutable(\DateTimeInterface $date): \DateTimeImmutable
     {
-        if (!$date instanceof \DateTimeImmutable) {
-            if ($date instanceof \DateTime) {
-                return \DateTimeImmutable::createFromMutable($date);
-            }
-
-            throw new InvalidArgumentException(\sprintf('Date object is not instance of %s', \DateTime::class));
+        if (!$date instanceof \DateTimeImmutable && $date instanceof \DateTime) {
+            return \DateTimeImmutable::createFromMutable($date);
         }
 
         return $date;

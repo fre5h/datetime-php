@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Tests\Fresh\DateTime;
 
 use Fresh\DateTime\DateTimeHelper;
-use Fresh\DateTime\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,15 +38,5 @@ class DateTimeHelperTest extends TestCase
 
         self::assertInstanceOf(\DateTimeImmutable::class, $processedDate);
         self::assertSame($date->format('Y-m-d'), $processedDate->format('Y-m-d'));
-    }
-
-    public function testInvalidArgumentException(): void
-    {
-        $date = $this->createMock(\DateTimeInterface::class);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Date object is not instance of \DateTime');
-
-        DateTimeHelper::convertDateTimeToImmutable($date);
     }
 }
