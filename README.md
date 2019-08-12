@@ -17,7 +17,7 @@ PHP library with additional functions for processing dates & times. :clock12: :c
 
 * PHP 7.1.3 *and later*
 
-## 🚀 Install via Composer
+## Install via Composer 🚀
 
 ```composer req fresh/datetime```
 
