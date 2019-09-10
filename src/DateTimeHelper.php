@@ -44,6 +44,8 @@ class DateTimeHelper
     /**
      * @param DateRange $dateRange
      *
+     * @throws \UnexpectedValueException
+     *
      * @return \DateTimeImmutable[]
      */
     public function getDatesFromDateRangeAsArrayOfObjects(DateRange $dateRange): array
@@ -51,9 +53,16 @@ class DateTimeHelper
         $datesAsObjects = [];
 
         if ($dateRange->getSince()->format(self::INTERNAL_DATE_FORMAT) !== $dateRange->getTill()->format(self::INTERNAL_DATE_FORMAT)) {
-            $till = new \DateTime('now', $dateRange->getTill()->getTimezone());
-            $till->setTimestamp($till->getTimestamp());
-            $till->modify('+1 day'); // Hook to include last day to the period
+            $till = \DateTime::createFromFormat(
+                'U',
+                (string) $dateRange->getTill()->getTimestamp(),
+                $dateRange->getTill()->getTimezone()
+
+            );
+
+            if (!$till instanceof \DateTime) {
+                throw new \UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
+            }
 
             $period = new \DatePeriod($dateRange->getSince(), new \DateInterval('P1D'), $till);
 
