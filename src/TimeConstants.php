@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the DateTime library
+ * This file is part of the DateTime library.
  *
  * (c) Artem Henvald <genvaldartem@gmail.com>
  *
