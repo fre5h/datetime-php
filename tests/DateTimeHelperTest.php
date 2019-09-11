@@ -64,57 +64,53 @@ class DateTimeHelperTest extends TestCase
         self::assertSame('Europe/Kiev', $now->getTimezone()->getName());
     }
 
-    public function testGetDatesFromDateRangeAsArrayOfStrings(): void
+    /** @dataProvider dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings */
+    public function testGetDatesFromDateRangeAsArrayOfStrings(string $timeZoneName, string $since, string $till, array $expectedDates): void
     {
         $this->dateRange
             ->expects(self::any())
             ->method('getSince')
-            ->willReturn(new \DateTimeImmutable('2030-01-01', new \DateTimeZone('UTC')))
+            ->willReturn(new \DateTimeImmutable($since, new \DateTimeZone($timeZoneName)))
         ;
         $this->dateRange
             ->expects(self::any())
             ->method('getTill')
-            ->willReturn(new \DateTimeImmutable('2030-01-03', new \DateTimeZone('UTC')))
+            ->willReturn(new \DateTimeImmutable($till, new \DateTimeZone($timeZoneName)))
         ;
 
         $dates = $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfStrings($this->dateRange);
 
-        self::assertSame(['2030-01-01', '2030-01-02', '2030-01-03'], $dates);
+        self::assertSame($expectedDates, $dates);
     }
 
-    public function testGetDatesFromDateRangeAsArrayOfStringsInCET(): void
+    public static function dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings(): \Generator
     {
-        $this->dateRange
-            ->expects(self::any())
-            ->method('getSince')
-            ->willReturn(new \DateTimeImmutable('2030-01-01', new \DateTimeZone('Europe/Berlin')))
-        ;
-        $this->dateRange
-            ->expects(self::any())
-            ->method('getTill')
-            ->willReturn(new \DateTimeImmutable('2030-01-03', new \DateTimeZone('Europe/Berlin')))
-        ;
+        yield 'UTC three days' => [
+            'timezone_name' => 'UTC',
+            'since' => '2030-01-01',
+            'till' => '2030-01-03',
+            'dates' => ['2030-01-01', '2030-01-02', '2030-01-03'],
+        ];
 
-        $dates = $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfStrings($this->dateRange);
+        yield 'CET three days' => [
+            'timezone_name' => 'Europe/Berlin',
+            'since' => '2030-01-01',
+            'till' => '2030-01-03',
+            'dates' => ['2030-01-01', '2030-01-02', '2030-01-03'],
+        ];
 
-        self::assertSame(['2030-01-01', '2030-01-02', '2030-01-03'], $dates);
-    }
+        yield 'UTC one day' => [
+            'timezone_name' => 'UTC',
+            'since' => '2030-01-01',
+            'till' => '2030-01-01',
+            'dates' => ['2030-01-01'],
+        ];
 
-    public function testGetDatesFromDateRangeAsArrayOfStringsWithOneDay(): void
-    {
-        $this->dateRange
-            ->expects(self::any())
-            ->method('getSince')
-            ->willReturn(new \DateTimeImmutable('2030-01-01', new \DateTimeZone('UTC')))
-        ;
-        $this->dateRange
-            ->expects(self::any())
-            ->method('getTill')
-            ->willReturn(new \DateTimeImmutable('2030-01-01', new \DateTimeZone('UTC')))
-        ;
-
-        $dates = $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfStrings($this->dateRange);
-
-        self::assertSame(['2030-01-01'], $dates);
+        yield 'CET one day' => [
+            'timezone_name' => 'Europe/Berlin',
+            'since' => '2030-01-01',
+            'till' => '2030-01-01',
+            'dates' => ['2030-01-01'],
+        ];
     }
 }

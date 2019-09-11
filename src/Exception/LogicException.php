@@ -17,6 +17,6 @@ namespace Fresh\DateTime\Exception;
  *
  * @author Artem Henvald <genvaldartem@gmail.com>
  */
-class LogicException extends \UnexpectedValueException
+class LogicException extends \LogicException
 {
 }

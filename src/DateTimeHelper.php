@@ -52,34 +52,18 @@ class DateTimeHelper
      */
     public function getDatesFromDateRangeAsArrayOfObjects(DateRange $dateRange): array
     {
-        $datesAsObjects = [];
-
         $dateRange->assertSameTimezones();
 
-        if ($dateRange->getSince()->format(self::INTERNAL_DATE_FORMAT) !== $dateRange->getTill()->format(self::INTERNAL_DATE_FORMAT)) {
-            $since = clone $dateRange->getSince();
-            if (!$since instanceof \DateTime) {
-                throw new UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
-            }
-            $since->setTime(0, 0);
+        $since = $this->cloneDateTime($dateRange->getSince());
+        $since->setTime(0, 0);
 
-            $till = \DateTime::createFromFormat(
-                'U',
-                (string) $dateRange->getTill()->getTimestamp(),
-                $dateRange->getTill()->getTimezone()
-            );
-            if (!$till instanceof \DateTime) {
-                throw new UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
-            }
-            $till->modify('+1 day'); // Include till day in period too
-            $till->setTime(23, 59, 59);
+        $till = $this->cloneDateTime($dateRange->getTill());
+        $till->setTime(23, 59, 59);
 
-            $period = new \DatePeriod($dateRange->getSince(), new \DateInterval('P1D'), $till);
-            foreach ($period as $date) {
-                $datesAsObjects[] = $date;
-            }
-        } else {
-            $datesAsObjects[] = $dateRange->getSince(); // If since and till dates are equal, then only one date in array
+        $datesAsObjects = [];
+        $period = new \DatePeriod($since, new \DateInterval('P1D'), $till);
+        foreach ($period as $date) {
+            $datesAsObjects[] = $date;
         }
 
         return $datesAsObjects;
@@ -100,5 +84,23 @@ class DateTimeHelper
         }
 
         return $datesAsStrings;
+    }
+
+    /**
+     * @param \DateTimeInterface $originalDate
+     *
+     * @throws UnexpectedValueException
+     *
+     * @return \DateTime
+     */
+    private function cloneDateTime(\DateTimeInterface $originalDate): \DateTime
+    {
+        $date = \DateTime::createFromFormat(\DateTime::RFC3339, $originalDate->format(\DateTime::RFC3339), $originalDate->getTimezone());
+
+        if (!$date instanceof \DateTime) {
+            throw new UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
+        }
+
+        return $date;
     }
 }
