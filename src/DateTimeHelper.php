@@ -48,7 +48,7 @@ class DateTimeHelper
      *
      * @throws UnexpectedValueException
      *
-     * @return \DateTimeImmutable[]|array
+     * @return \DateTimeInterface[]
      */
     public function getDatesFromDateRangeAsArrayOfObjects(DateRange $dateRange): array
     {
@@ -66,14 +66,11 @@ class DateTimeHelper
             }
 
             $period = new \DatePeriod($dateRange->getSince(), new \DateInterval('P1D'), $till);
-
-            /** @var \DateTime $date */
             foreach ($period as $date) {
                 $datesAsObjects[] = $date;
             }
         } else {
-            // If since and till dates are equal, then only one date in range
-            $datesAsObjects[] = $dateRange->getSince();
+            $datesAsObjects[] = $dateRange->getSince(); // If since and till dates are equal, then only one date in array
         }
 
         return $datesAsObjects;
