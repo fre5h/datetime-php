@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Fresh\DateTime;
 
+use Fresh\DateTime\Exception\UnexpectedValueException;
+
 /**
  * DateTimeHelper.
  *
@@ -44,7 +46,7 @@ class DateTimeHelper
     /**
      * @param DateRange $dateRange
      *
-     * @throws \UnexpectedValueException
+     * @throws UnexpectedValueException
      *
      * @return \DateTimeImmutable[]
      */
@@ -57,11 +59,10 @@ class DateTimeHelper
                 'U',
                 (string) $dateRange->getTill()->getTimestamp(),
                 $dateRange->getTill()->getTimezone()
-
             );
 
             if (!$till instanceof \DateTime) {
-                throw new \UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
+                throw new UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
             }
 
             $period = new \DatePeriod($dateRange->getSince(), new \DateInterval('P1D'), $till);
@@ -75,7 +76,7 @@ class DateTimeHelper
             $datesAsObjects[] = $dateRange->getSince();
         }
 
-        return $datesAsObjects;
+        return \array_values($datesAsObjects);
     }
 
     /**
@@ -83,7 +84,7 @@ class DateTimeHelper
      *
      * @return string[]
      */
-    public function getDatesFromDateRangeAsArrayOfString(DateRange $dateRange): array
+    public function getDatesFromDateRangeAsArrayOfStrings(DateRange $dateRange): array
     {
         $datesAsObjects = $this->getDatesFromDateRangeAsArrayOfObjects($dateRange);
 
