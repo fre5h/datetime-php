@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Fresh\DateTime;
 
 use Fresh\DateTime\Exception\UnexpectedValueException;
+use InvalidArgumentException;
 
 /**
  * DateTimeHelper.
@@ -46,6 +47,7 @@ class DateTimeHelper
     /**
      * @param DateRange $dateRange
      *
+     * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      *
      * @return \DateTimeInterface[]
@@ -60,6 +62,9 @@ class DateTimeHelper
                 (string) $dateRange->getTill()->getTimestamp(),
                 $dateRange->getTill()->getTimezone()
             );
+            if (!$till instanceof \DateTime) {
+                throw new InvalidArgumentException('Could not create till date');
+            }
             $till->modify('+1 day'); // Include till day in period too
 
             if (!$till instanceof \DateTime) {
