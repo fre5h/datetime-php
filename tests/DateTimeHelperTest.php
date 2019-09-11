@@ -67,12 +67,12 @@ class DateTimeHelperTest extends TestCase
     public function testGetDatesFromDateRangeAsArrayOfStrings(): void
     {
         $this->dateRange
-            ->expects(self::once())
+            ->expects(self::any())
             ->method('getSince')
             ->willReturn(new \DateTimeImmutable('2030-01-01', new \DateTimeZone('UTC')))
         ;
         $this->dateRange
-            ->expects(self::once())
+            ->expects(self::any())
             ->method('getTill')
             ->willReturn(new \DateTimeImmutable('2030-01-03', new \DateTimeZone('UTC')))
         ;
@@ -85,12 +85,12 @@ class DateTimeHelperTest extends TestCase
     public function testGetDatesFromDateRangeAsArrayOfStringsInCET(): void
     {
         $this->dateRange
-            ->expects(self::once())
+            ->expects(self::any())
             ->method('getSince')
             ->willReturn(new \DateTimeImmutable('2030-01-01', new \DateTimeZone('Europe/Berlin')))
         ;
         $this->dateRange
-            ->expects(self::once())
+            ->expects(self::any())
             ->method('getTill')
             ->willReturn(new \DateTimeImmutable('2030-01-03', new \DateTimeZone('Europe/Berlin')))
         ;
@@ -103,12 +103,12 @@ class DateTimeHelperTest extends TestCase
     public function testGetDatesFromDateRangeAsArrayOfStringsWithOneDay(): void
     {
         $this->dateRange
-            ->expects(self::once())
+            ->expects(self::any())
             ->method('getSince')
             ->willReturn(new \DateTimeImmutable('2030-01-01', new \DateTimeZone('UTC')))
         ;
         $this->dateRange
-            ->expects(self::once())
+            ->expects(self::any())
             ->method('getTill')
             ->willReturn(new \DateTimeImmutable('2030-01-01', new \DateTimeZone('UTC')))
         ;
