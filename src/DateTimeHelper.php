@@ -60,6 +60,7 @@ class DateTimeHelper
                 (string) $dateRange->getTill()->getTimestamp(),
                 $dateRange->getTill()->getTimezone()
             );
+            $till->modify('+1 day'); // Include till day in period too
 
             if (!$till instanceof \DateTime) {
                 throw new UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
