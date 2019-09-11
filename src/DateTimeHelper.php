@@ -54,7 +54,15 @@ class DateTimeHelper
     {
         $datesAsObjects = [];
 
+        $dateRange->assertSameTimezones();
+
         if ($dateRange->getSince()->format(self::INTERNAL_DATE_FORMAT) !== $dateRange->getTill()->format(self::INTERNAL_DATE_FORMAT)) {
+            $since = clone $dateRange->getSince();
+            if (!$since instanceof \DateTime) {
+                throw new UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
+            }
+            $since->setTime(0, 0);
+
             $till = \DateTime::createFromFormat(
                 'U',
                 (string) $dateRange->getTill()->getTimestamp(),
@@ -64,6 +72,7 @@ class DateTimeHelper
                 throw new UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
             }
             $till->modify('+1 day'); // Include till day in period too
+            $till->setTime(23, 59, 59);
 
             $period = new \DatePeriod($dateRange->getSince(), new \DateInterval('P1D'), $till);
             foreach ($period as $date) {

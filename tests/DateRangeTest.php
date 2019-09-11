@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Fresh\DateTime\Tests;
 
 use Fresh\DateTime\DateRange;
+use Fresh\DateTime\Exception\LogicException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -53,5 +54,18 @@ class DateRangeTest extends TestCase
 
         $dateRange->setTill($till);
         self::assertSame($till, $dateRange->getTill());
+    }
+
+    public function testAssertSameTimezones(): void
+    {
+        $dateRange = new DateRange(
+            new \DateTime('now', new \DateTimeZone('Europe/Kiev')),
+            new \DateTime('now', new \DateTimeZone('Europe/Warsaw'))
+        );
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Date range has different timezones');
+
+        $dateRange->assertSameTimezones();
     }
 }

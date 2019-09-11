@@ -12,18 +12,18 @@ declare(strict_types=1);
 
 namespace Fresh\DateTime\Tests\Exception;
 
-use Fresh\DateTime\Exception\UnexpectedValueException;
+use Fresh\DateTime\Exception\LogicException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * UnexpectedValueExceptionTest.
+ * LogicExceptionTest.
  *
  * @author Artem Henvald <genvaldartem@gmail.com>
  */
-class UnexpectedValueExceptionTest extends TestCase
+class LogicExceptionTest extends TestCase
 {
     public function testConstructor(): void
     {
-        self::assertInstanceOf(\UnexpectedValueException::class, new UnexpectedValueException());
+        self::assertInstanceOf(\LogicException::class, new LogicException());
     }
 }

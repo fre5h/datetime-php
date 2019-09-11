@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Fresh\DateTime;
 
+use Fresh\DateTime\Exception\LogicException;
+
 /**
  * DateRange.
  *
@@ -73,5 +75,15 @@ class DateRange
         $this->till = $till;
 
         return $this;
+    }
+
+    /**
+     * @throws LogicException
+     */
+    public function assertSameTimezones(): void
+    {
+        if ($this->since->getTimezone()->getName() !== $this->till->getTimezone()->getName()) {
+            throw new LogicException('Date range has different timezones');
+        }
     }
 }
