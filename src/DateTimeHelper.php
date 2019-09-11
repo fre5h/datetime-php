@@ -48,7 +48,7 @@ class DateTimeHelper
      *
      * @throws UnexpectedValueException
      *
-     * @return \DateTimeImmutable[]
+     * @return \DateTimeImmutable[]|array
      */
     public function getDatesFromDateRangeAsArrayOfObjects(DateRange $dateRange): array
     {
@@ -76,7 +76,7 @@ class DateTimeHelper
             $datesAsObjects[] = $dateRange->getSince();
         }
 
-        return \array_values($datesAsObjects);
+        return $datesAsObjects;
     }
 
     /**
