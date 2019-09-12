@@ -24,3 +24,9 @@ PHP library with additional functions for processing dates & times. :clock12: :c
 ## Contributing
 
 See [CONTRIBUTING](https://github.com/fre5h/datetime-php/blob/master/.github/CONTRIBUTING.md) file.
+
+## Features
+
+* Common time constants (number of seconds in a minute, number of minutes in an hour, etc.).
+* Methods for creating current \DateTime and \DateTimeImmutable.
+* Getting array of objects/strings of all dates in date range.

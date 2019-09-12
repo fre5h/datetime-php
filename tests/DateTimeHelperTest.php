@@ -155,13 +155,36 @@ class DateTimeHelperTest extends TestCase
             ->willReturn(new \DateTimeImmutable('0000-00-00', new \DateTimeZone('UTC')))
         ;
         $this->dateRange
-            ->expects(self::never())
+            ->expects(self::any())
             ->method('getTill')
+            ->willReturn(new \DateTimeImmutable('0000-00-00', new \DateTimeZone('UTC')))
         ;
 
         $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage('Could not create DateTime object');
 
         $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfObjects($this->dateRange);
+    }
+
+    public function testDatesCache(): void
+    {
+        $expectedDates = ['2000-01-01', '2000-01-02', '2000-01-03'];
+
+        $this->dateRange
+            ->expects(self::exactly(3)) // 2 times for first call and only 1 for next call
+            ->method('getSince')
+            ->willReturn(new \DateTimeImmutable('2000-01-01', new \DateTimeZone('UTC')))
+        ;
+        $this->dateRange
+            ->expects(self::exactly(3)) // 2 times for first call and only 1 for next call
+            ->method('getTill')
+            ->willReturn(new \DateTimeImmutable('2000-01-03', new \DateTimeZone('UTC')))
+        ;
+
+        $dates1 = $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfStrings($this->dateRange);
+        $dates2 = $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfStrings($this->dateRange);
+
+        self::assertSame($expectedDates, $dates1);
+        self::assertSame($expectedDates, $dates2);
     }
 }

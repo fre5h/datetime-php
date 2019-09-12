@@ -23,6 +23,8 @@ class DateTimeHelper
 {
     private const INTERNAL_DATE_FORMAT = 'Y-m-d';
 
+    private $datesCache = [];
+
     /**
      * @param \DateTimeZone|null $timeZone
      *
@@ -52,21 +54,27 @@ class DateTimeHelper
      */
     public function getDatesFromDateRangeAsArrayOfObjects(DateRange $dateRange): array
     {
-        $dateRange->assertSameTimezones();
+        $cacheKeyForDateRange = $this->getCacheKeyForDateRange($dateRange);
 
-        $since = $this->cloneDateTime($dateRange->getSince());
-        $since->setTime(0, 0);
+        if (!isset($this->datesCache[$cacheKeyForDateRange])) {
+            $dateRange->assertSameTimezones();
 
-        $till = $this->cloneDateTime($dateRange->getTill());
-        $till->setTime(23, 59, 59);
+            $since = $this->cloneDateTime($dateRange->getSince());
+            $since->setTime(0, 0);
 
-        $datesAsObjects = [];
-        $period = new \DatePeriod($since, new \DateInterval('P1D'), $till);
-        foreach ($period as $date) {
-            $datesAsObjects[] = $date;
+            $till = $this->cloneDateTime($dateRange->getTill());
+            $till->setTime(23, 59, 59);
+
+            $datesAsObjects = [];
+            $period = new \DatePeriod($since, new \DateInterval('P1D'), $till);
+            foreach ($period as $date) {
+                $datesAsObjects[] = $date;
+            }
+
+            $this->datesCache[$cacheKeyForDateRange] = $datesAsObjects;
         }
 
-        return $datesAsObjects;
+        return $this->datesCache[$cacheKeyForDateRange];
     }
 
     /**
@@ -87,6 +95,25 @@ class DateTimeHelper
     }
 
     /**
+     * @param DateRange $dateRange
+     *
+     * @return string
+     */
+    private function getCacheKeyForDateRange(DateRange $dateRange): string
+    {
+        $since = $dateRange->getSince();
+        $till = $dateRange->getTill();
+
+        return \sprintf(
+            '%s_%s_%s_%s',
+            $since->format(self::INTERNAL_DATE_FORMAT),
+            $since->getTimezone()->getName(),
+            $till->format(self::INTERNAL_DATE_FORMAT),
+            $till->getTimezone()->getName(),
+        );
+    }
+
+    /**
      * @param \DateTimeInterface $originalDate
      *
      * @throws UnexpectedValueException
@@ -95,7 +122,11 @@ class DateTimeHelper
      */
     private function cloneDateTime(\DateTimeInterface $originalDate): \DateTime
     {
-        $date = \DateTime::createFromFormat(\DateTime::RFC3339, $originalDate->format(\DateTime::RFC3339), $originalDate->getTimezone());
+        $date = \DateTime::createFromFormat(
+            \DateTime::RFC3339,
+            $originalDate->format(\DateTime::RFC3339),
+            $originalDate->getTimezone()
+        );
 
         if (!$date instanceof \DateTime) {
             throw new UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
