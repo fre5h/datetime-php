@@ -37,8 +37,8 @@ final class DateRange implements DateRangeInterface
     {
         $this->assertSameTimezones($since, $till);
 
-        $this->since = \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, $since->format(\DateTime::RFC3339), $since->getTimezone());
-        $this->till = \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, $till->format(\DateTime::RFC3339), $till->getTimezone());
+        $this->since = DateTimeCloner::cloneIntoDateTimeImmutable($since);
+        $this->till = DateTimeCloner::cloneIntoDateTimeImmutable($till);
     }
 
     /**

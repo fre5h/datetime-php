@@ -15,7 +15,6 @@ namespace Fresh\DateTime\Tests;
 use Fresh\DateTime\DateRangeInterface;
 use Fresh\DateTime\DateTimeHelper;
 use Fresh\DateTime\DateTimeHelperInterface;
-use Fresh\DateTime\Exception\UnexpectedValueException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -151,25 +150,6 @@ class DateTimeHelperTest extends TestCase
             'till' => '2000-01-01',
             'dates' => ['2000-01-01'],
         ];
-    }
-
-    public function testExceptionOnCloningDates(): void
-    {
-        $this->dateRange
-            ->expects(self::any())
-            ->method('getSince')
-            ->willReturn(new \DateTimeImmutable('0000-00-00', new \DateTimeZone('UTC')))
-        ;
-        $this->dateRange
-            ->expects(self::any())
-            ->method('getTill')
-            ->willReturn(new \DateTimeImmutable('0000-00-00', new \DateTimeZone('UTC')))
-        ;
-
-        $this->expectException(UnexpectedValueException::class);
-        $this->expectExceptionMessage('Could not create DateTime object');
-
-        $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfObjects($this->dateRange);
     }
 
     public function testDatesCache(): void

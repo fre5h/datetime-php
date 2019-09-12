@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Fresh\DateTime;
 
-use Fresh\DateTime\Exception\UnexpectedValueException;
-
 /**
  * DateTimeHelper.
  *
@@ -49,10 +47,10 @@ class DateTimeHelper implements DateTimeHelperInterface
         $cacheKeyForDateRange = $this->getCacheKeyForDateRange($dateRange);
 
         if (!isset($this->datesCache[$cacheKeyForDateRange])) {
-            $since = $this->cloneDateTime($dateRange->getSince());
+            $since = DateTimeCloner::cloneIntoDateTime($dateRange->getSince());
             $since->setTime(0, 0);
 
-            $till = $this->cloneDateTime($dateRange->getTill());
+            $till = DateTimeCloner::cloneIntoDateTime($dateRange->getTill());
             $till->setTime(23, 59, 59);
 
             $datesAsObjects = [];
@@ -97,29 +95,7 @@ class DateTimeHelper implements DateTimeHelperInterface
             $since->format(self::INTERNAL_DATE_FORMAT),
             $since->getTimezone()->getName(),
             $till->format(self::INTERNAL_DATE_FORMAT),
-            $till->getTimezone()->getName(),
+            $till->getTimezone()->getName()
         );
-    }
-
-    /**
-     * @param \DateTimeInterface $originalDate
-     *
-     * @throws UnexpectedValueException
-     *
-     * @return \DateTime
-     */
-    private function cloneDateTime(\DateTimeInterface $originalDate): \DateTime
-    {
-        $date = \DateTime::createFromFormat(
-            \DateTime::RFC3339,
-            $originalDate->format(\DateTime::RFC3339),
-            $originalDate->getTimezone()
-        );
-
-        if (!$date instanceof \DateTime) {
-            throw new UnexpectedValueException(\sprintf('Could not create %s object', \DateTime::class));
-        }
-
-        return $date;
     }
 }

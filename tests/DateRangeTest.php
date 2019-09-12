@@ -38,7 +38,7 @@ class DateRangeTest extends TestCase
         self::assertSame($till->format('Y-m-d'), $dateRange->getTill()->format('Y-m-d'));
     }
 
-    public function testConstructorWithException(): void
+    public function testConstructorWithExceptionForDifferentTimezones(): void
     {
         $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
         $till = new \DateTime('now', new \DateTimeZone('Europe/Warsaw'));

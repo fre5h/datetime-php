@@ -31,3 +31,4 @@ See [CONTRIBUTING](https://github.com/fre5h/datetime-php/blob/master/.github/CON
 * Methods for creating current \DateTime and \DateTimeImmutable.
 * Immutable ValueObject DateRange.
 * Getting array of objects/strings of all dates in date range.
+* DateTimeCloner allows to clone dates into \DateTime or \DateTimeImmutable instances.

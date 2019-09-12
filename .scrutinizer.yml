@@ -1,13 +1,6 @@
 checks:
     php: true
 
-build:
-    environment:
-        php:
-            version: '7.3'
-            ini:
-                'date.timezone': 'UTC'
-
 filter:
     paths:
         - src/*
