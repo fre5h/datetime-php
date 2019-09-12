@@ -34,5 +34,5 @@ interface DateRangeInterface
      *
      * @return bool
      */
-    public function isEqual(DateRangeInterface $dateRange): bool;
+    public function isEqual(self $dateRange): bool;
 }
