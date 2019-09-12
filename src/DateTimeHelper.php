@@ -19,16 +19,14 @@ use Fresh\DateTime\Exception\UnexpectedValueException;
  *
  * @author Artem Henvald <genvaldartem@gmail.com>
  */
-class DateTimeHelper
+class DateTimeHelper implements DateTimeHelperInterface
 {
     private const INTERNAL_DATE_FORMAT = 'Y-m-d';
 
     private $datesCache = [];
 
     /**
-     * @param \DateTimeZone|null $timeZone
-     *
-     * @return \DateTime
+     * {@inheritdoc}
      */
     public function getCurrentDatetime(?\DateTimeZone $timeZone = null): \DateTime
     {
@@ -36,9 +34,7 @@ class DateTimeHelper
     }
 
     /**
-     * @param \DateTimeZone|null $timeZone
-     *
-     * @return \DateTimeImmutable
+     * {@inheritdoc}
      */
     public function getCurrentDatetimeImmutable(?\DateTimeZone $timeZone = null): \DateTimeImmutable
     {
@@ -46,19 +42,13 @@ class DateTimeHelper
     }
 
     /**
-     * @param DateRange $dateRange
-     *
-     * @throws UnexpectedValueException
-     *
-     * @return \DateTimeInterface[]
+     * {@inheritdoc}
      */
-    public function getDatesFromDateRangeAsArrayOfObjects(DateRange $dateRange): array
+    public function getDatesFromDateRangeAsArrayOfObjects(DateRangeInterface $dateRange): array
     {
         $cacheKeyForDateRange = $this->getCacheKeyForDateRange($dateRange);
 
         if (!isset($this->datesCache[$cacheKeyForDateRange])) {
-            $dateRange->assertSameTimezones();
-
             $since = $this->cloneDateTime($dateRange->getSince());
             $since->setTime(0, 0);
 
@@ -78,11 +68,9 @@ class DateTimeHelper
     }
 
     /**
-     * @param DateRange $dateRange
-     *
-     * @return string[]
+     * {@inheritdoc}
      */
-    public function getDatesFromDateRangeAsArrayOfStrings(DateRange $dateRange): array
+    public function getDatesFromDateRangeAsArrayOfStrings(DateRangeInterface $dateRange): array
     {
         $datesAsObjects = $this->getDatesFromDateRangeAsArrayOfObjects($dateRange);
 
@@ -95,11 +83,11 @@ class DateTimeHelper
     }
 
     /**
-     * @param DateRange $dateRange
+     * @param DateRangeInterface $dateRange
      *
      * @return string
      */
-    private function getCacheKeyForDateRange(DateRange $dateRange): string
+    private function getCacheKeyForDateRange(DateRangeInterface $dateRange): string
     {
         $since = $dateRange->getSince();
         $till = $dateRange->getTill();

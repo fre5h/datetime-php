@@ -12,8 +12,9 @@ declare(strict_types=1);
 
 namespace Fresh\DateTime\Tests;
 
-use Fresh\DateTime\DateRange;
+use Fresh\DateTime\DateRangeInterface;
 use Fresh\DateTime\DateTimeHelper;
+use Fresh\DateTime\DateTimeHelperInterface;
 use Fresh\DateTime\Exception\UnexpectedValueException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DateTimeHelperTest extends TestCase
 {
-    /** @var DateRange|MockObject */
+    /** @var DateRangeInterface|MockObject */
     private $dateRange;
 
     /** @var DateTimeHelper */
@@ -33,7 +34,7 @@ class DateTimeHelperTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->dateRange = $this->createMock(DateRange::class);
+        $this->dateRange = $this->createMock(DateRangeInterface::class);
         $this->dateTimeHelper = new DateTimeHelper();
     }
 
@@ -43,6 +44,11 @@ class DateTimeHelperTest extends TestCase
             $this->dateRange,
             $this->dateTimeHelper,
         );
+    }
+
+    public function testConstructor(): void
+    {
+        self::assertInstanceOf(DateTimeHelperInterface::class, $this->dateTimeHelper);
     }
 
     public function testGetCurrentDatetime(): void

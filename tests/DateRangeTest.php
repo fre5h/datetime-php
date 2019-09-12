@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Fresh\DateTime\Tests;
 
 use Fresh\DateTime\DateRange;
+use Fresh\DateTime\DateRangeInterface;
 use Fresh\DateTime\Exception\LogicException;
 use PHPUnit\Framework\TestCase;
 
@@ -26,46 +27,35 @@ class DateRangeTest extends TestCase
     public function testConstructor(): void
     {
         $since = new \DateTime('now');
-        $till = new \DateTime('now');
+        $till = new \DateTime('tomorrow');
 
         $dateRange = new DateRange($since, $till);
 
-        self::assertSame($since, $dateRange->getSince());
-        self::assertSame($till, $dateRange->getTill());
+        self::assertInstanceOf(DateRangeInterface::class, $dateRange);
+        self::assertInstanceOf(\DateTimeImmutable::class, $dateRange->getSince());
+        self::assertInstanceOf(\DateTimeImmutable::class, $dateRange->getTill());
+        self::assertSame($since->format('Y-m-d'), $dateRange->getSince()->format('Y-m-d'));
+        self::assertSame($till->format('Y-m-d'), $dateRange->getTill()->format('Y-m-d'));
     }
 
-    public function testSetGetSince(): void
+    public function testConstructorWithException(): void
     {
-        $since = new \DateTime('yesterday');
-
-        $dateRange = new DateRange(new \DateTime('now'), new \DateTime('now'));
-        self::assertNotSame($since, $dateRange->getSince());
-
-        $dateRange->setSince($since);
-        self::assertSame($since, $dateRange->getSince());
-    }
-
-    public function testSetGetTill(): void
-    {
-        $till = new \DateTime('tomorrow');
-
-        $dateRange = new DateRange(new \DateTime('now'), new \DateTime('now'));
-        self::assertNotSame($till, $dateRange->getTill());
-
-        $dateRange->setTill($till);
-        self::assertSame($till, $dateRange->getTill());
-    }
-
-    public function testAssertSameTimezones(): void
-    {
-        $dateRange = new DateRange(
-            new \DateTime('now', new \DateTimeZone('Europe/Kiev')),
-            new \DateTime('now', new \DateTimeZone('Europe/Warsaw'))
-        );
+        $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+        $till = new \DateTime('now', new \DateTimeZone('Europe/Warsaw'));
 
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Date range has different timezones');
+        $this->expectExceptionMessage('Dates have different timezones');
 
-        $dateRange->assertSameTimezones();
+        new DateRange($since, $till);
+    }
+
+    public function testIsEqual(): void
+    {
+        $dateRange1 = new DateRange(new \DateTime('now', new \DateTimeZone('UTC')), new \DateTime('tomorrow', new \DateTimeZone('UTC')));
+        $dateRange2 = new DateRange(new \DateTime('now', new \DateTimeZone('UTC')), new \DateTime('tomorrow', new \DateTimeZone('UTC')));
+        $dateRange3 = new DateRange(new \DateTime('now', new \DateTimeZone('Europe/Kiev')), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev')));
+
+        self::assertTrue($dateRange1->isEqual($dateRange2));
+        self::assertFalse($dateRange1->isEqual($dateRange3));
     }
 }

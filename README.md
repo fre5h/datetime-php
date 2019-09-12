@@ -29,4 +29,5 @@ See [CONTRIBUTING](https://github.com/fre5h/datetime-php/blob/master/.github/CON
 
 * Common time constants (number of seconds in a minute, number of minutes in an hour, etc.).
 * Methods for creating current \DateTime and \DateTimeImmutable.
+* Immutable ValueObject DateRange.
 * Getting array of objects/strings of all dates in date range.

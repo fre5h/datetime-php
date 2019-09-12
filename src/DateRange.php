@@ -19,12 +19,14 @@ use Fresh\DateTime\Exception\LogicException;
  *
  * @author Artem Henvald <genvaldartem@gmail.com>
  */
-class DateRange
+final class DateRange implements DateRangeInterface
 {
-    /** @var \DateTimeInterface */
+    private const INTERNAL_DATE_FORMAT = 'Y-m-d';
+
+    /** @var \DateTimeImmutable */
     private $since;
 
-    /** @var \DateTimeInterface */
+    /** @var \DateTimeImmutable */
     private $till;
 
     /**
@@ -33,57 +35,50 @@ class DateRange
      */
     public function __construct(\DateTimeInterface $since, \DateTimeInterface $till)
     {
-        $this->since = $since;
-        $this->till = $till;
+        $this->assertSameTimezones($since, $till);
+
+        $this->since = \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, $since->format(\DateTime::RFC3339), $since->getTimezone());
+        $this->till = \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, $till->format(\DateTime::RFC3339), $till->getTimezone());
     }
 
     /**
-     * @return \DateTimeInterface
+     * {@inheritdoc}
      */
-    public function getSince(): \DateTimeInterface
+    public function getSince(): \DateTimeImmutable
     {
         return $this->since;
     }
 
     /**
-     * @param \DateTimeInterface $since
-     *
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setSince(\DateTimeInterface $since): self
-    {
-        $this->since = $since;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTimeInterface
-     */
-    public function getTill(): \DateTimeInterface
+    public function getTill(): \DateTimeImmutable
     {
         return $this->till;
     }
 
     /**
-     * @param \DateTimeInterface $till
-     *
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setTill(\DateTimeInterface $till): self
+    public function isEqual(DateRangeInterface $dateRange): bool
     {
-        $this->till = $till;
-
-        return $this;
+        return $this->since->format(self::INTERNAL_DATE_FORMAT) === $dateRange->getSince()->format(self::INTERNAL_DATE_FORMAT)
+            && $this->till->format(self::INTERNAL_DATE_FORMAT) === $dateRange->getTill()->format(self::INTERNAL_DATE_FORMAT)
+            && $this->since->getTimezone()->getName() === $dateRange->getTill()->getTimezone()->getName()
+            && $this->till->getTimezone()->getName() === $dateRange->getTill()->getTimezone()->getName()
+        ;
     }
 
     /**
+     * @param \DateTimeInterface $since
+     * @param \DateTimeInterface $till
+     *
      * @throws LogicException
      */
-    public function assertSameTimezones(): void
+    private function assertSameTimezones(\DateTimeInterface $since, \DateTimeInterface $till): void
     {
-        if ($this->since->getTimezone()->getName() !== $this->till->getTimezone()->getName()) {
-            throw new LogicException('Date range has different timezones');
+        if ($since->getTimezone()->getName() !== $till->getTimezone()->getName()) {
+            throw new LogicException('Dates have different timezones');
         }
     }
 }
