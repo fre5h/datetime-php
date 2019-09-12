@@ -15,7 +15,7 @@ PHP library with additional functions for processing dates & times. :clock12: :c
 
 ## Requirements
 
-* PHP 7.1.3 *and later*
+* PHP 7.3.0 *and later*
 
 ## Install via Composer 🚀
 

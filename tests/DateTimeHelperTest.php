@@ -14,6 +14,7 @@ namespace Fresh\DateTime\Tests;
 
 use Fresh\DateTime\DateRange;
 use Fresh\DateTime\DateTimeHelper;
+use Fresh\DateTime\Exception\UnexpectedValueException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -65,6 +66,31 @@ class DateTimeHelperTest extends TestCase
     }
 
     /** @dataProvider dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings */
+    public function testGetDatesFromDateRangeAsArrayOfObjects(string $timeZoneName, string $since, string $till, array $expectedDates): void
+    {
+        $this->dateRange
+            ->expects(self::any())
+            ->method('getSince')
+            ->willReturn(new \DateTimeImmutable($since, new \DateTimeZone($timeZoneName)))
+        ;
+        $this->dateRange
+            ->expects(self::any())
+            ->method('getTill')
+            ->willReturn(new \DateTimeImmutable($till, new \DateTimeZone($timeZoneName)))
+        ;
+
+        $datesAsObjects = $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfObjects($this->dateRange);
+        $dates = \array_map(
+            function (\DateTimeInterface $date) {
+                return $date->format('Y-m-d');
+            },
+            $datesAsObjects
+        );
+
+        self::assertSame($expectedDates, $dates);
+    }
+
+    /** @dataProvider dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings */
     public function testGetDatesFromDateRangeAsArrayOfStrings(string $timeZoneName, string $since, string $till, array $expectedDates): void
     {
         $this->dateRange
@@ -87,30 +113,55 @@ class DateTimeHelperTest extends TestCase
     {
         yield 'UTC three days' => [
             'timezone_name' => 'UTC',
-            'since' => '2030-01-01',
-            'till' => '2030-01-03',
-            'dates' => ['2030-01-01', '2030-01-02', '2030-01-03'],
+            'since' => '2000-01-01',
+            'till' => '2000-01-03',
+            'dates' => ['2000-01-01', '2000-01-02', '2000-01-03'],
         ];
 
         yield 'CET three days' => [
             'timezone_name' => 'Europe/Berlin',
-            'since' => '2030-01-01',
-            'till' => '2030-01-03',
-            'dates' => ['2030-01-01', '2030-01-02', '2030-01-03'],
+            'since' => '2000-01-01',
+            'till' => '2000-01-03',
+            'dates' => ['2000-01-01', '2000-01-02', '2000-01-03'],
+        ];
+
+        yield 'CET three days cross months' => [
+            'timezone_name' => 'Europe/Berlin',
+            'since' => '2000-02-28',
+            'till' => '2000-03-02',
+            'dates' => ['2000-02-28', '2000-02-29', '2000-03-01', '2000-03-02'],
         ];
 
         yield 'UTC one day' => [
             'timezone_name' => 'UTC',
-            'since' => '2030-01-01',
-            'till' => '2030-01-01',
-            'dates' => ['2030-01-01'],
+            'since' => '2000-01-01',
+            'till' => '2000-01-01',
+            'dates' => ['2000-01-01'],
         ];
 
         yield 'CET one day' => [
             'timezone_name' => 'Europe/Berlin',
-            'since' => '2030-01-01',
-            'till' => '2030-01-01',
-            'dates' => ['2030-01-01'],
+            'since' => '2000-01-01',
+            'till' => '2000-01-01',
+            'dates' => ['2000-01-01'],
         ];
+    }
+
+    public function testExceptionOnCloningDates(): void
+    {
+        $this->dateRange
+            ->expects(self::any())
+            ->method('getSince')
+            ->willReturn(new \DateTimeImmutable('0000-00-00', new \DateTimeZone('UTC')))
+        ;
+        $this->dateRange
+            ->expects(self::never())
+            ->method('getTill')
+        ;
+
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage('Could not create DateTime object');
+
+        $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfObjects($this->dateRange);
     }
 }
