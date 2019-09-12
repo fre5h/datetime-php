@@ -65,8 +65,7 @@ final class DateRange implements DateRangeInterface
         return $this->since->format(self::INTERNAL_DATE_FORMAT) === $dateRange->getSince()->format(self::INTERNAL_DATE_FORMAT)
             && $this->till->format(self::INTERNAL_DATE_FORMAT) === $dateRange->getTill()->format(self::INTERNAL_DATE_FORMAT)
             && $this->since->getTimezone()->getName() === $dateRange->getTill()->getTimezone()->getName()
-            && $this->till->getTimezone()->getName() === $dateRange->getTill()->getTimezone()->getName()
-        ;
+            && $this->till->getTimezone()->getName() === $dateRange->getTill()->getTimezone()->getName();
     }
 
     /**
