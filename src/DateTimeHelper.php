@@ -26,6 +26,14 @@ class DateTimeHelper implements DateTimeHelperInterface
     /**
      * {@inheritdoc}
      */
+    public function createDateTimeZone(string $timeZoneName = 'UTC'): \DateTimeZone
+    {
+        return new \DateTimeZone($timeZoneName);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCurrentDatetime(?\DateTimeZone $timeZone = null): \DateTime
     {
         return new \DateTime('now', $timeZone);

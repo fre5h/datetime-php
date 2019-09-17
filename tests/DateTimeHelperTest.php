@@ -50,6 +50,16 @@ class DateTimeHelperTest extends TestCase
         self::assertInstanceOf(DateTimeHelperInterface::class, $this->dateTimeHelper);
     }
 
+    public function testCreateDateTimeZone(): void
+    {
+        $timezone = $this->dateTimeHelper->createDateTimeZone();
+        self::assertInstanceOf(\DateTimeZone::class, $timezone);
+        self::assertSame('UTC', $timezone->getName());
+
+        $timezone = $this->dateTimeHelper->createDateTimeZone('Europe/Kiev');
+        self::assertInstanceOf(\DateTimeZone::class, $timezone);
+    }
+
     public function testGetCurrentDatetime(): void
     {
         $now = $this->dateTimeHelper->getCurrentDatetime();

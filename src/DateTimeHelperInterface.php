@@ -22,6 +22,13 @@ use Fresh\DateTime\Exception\UnexpectedValueException;
 interface DateTimeHelperInterface
 {
     /**
+     * @param string $timeZoneName
+     *
+     * @return \DateTimeZone
+     */
+    public function createDateTimeZone(string $timeZoneName = 'UTC'): \DateTimeZone;
+
+    /**
      * @param \DateTimeZone|null $timeZone
      *
      * @return \DateTime
