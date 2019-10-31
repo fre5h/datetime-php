@@ -28,8 +28,8 @@ See [CONTRIBUTING](https://github.com/fre5h/datetime-php/blob/master/.github/CON
 ## Features
 
 * Common time constants (number of seconds in a minute, number of minutes in an hour, etc.).
-* Methods for creating current \DateTime and \DateTimeImmutable objects.
-* Method for creating \DateTimeZone object.
-* Immutable ValueObject DateRange.
+* Methods for creating current `\DateTime` and `\DateTimeImmutable` objects.
+* Method for creating `\DateTimeZone` object.
+* Immutable ValueObject `DateRange`.
 * Getting array of objects/strings of all dates in date range.
-* DateTimeCloner allows to clone dates into \DateTime or \DateTimeImmutable instances.
+* DateTimeCloner allows to clone dates into `\DateTime` or `\DateTimeImmutable` instances.
