@@ -54,8 +54,12 @@ class DateRangeTest extends TestCase
         $dateRange1 = new DateRange(new \DateTime('now', new \DateTimeZone('UTC')), new \DateTime('tomorrow', new \DateTimeZone('UTC')));
         $dateRange2 = new DateRange(new \DateTime('now', new \DateTimeZone('UTC')), new \DateTime('tomorrow', new \DateTimeZone('UTC')));
         $dateRange3 = new DateRange(new \DateTime('now', new \DateTimeZone('Europe/Kiev')), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev')));
+        $dateRange4 = new DateRange(new \DateTime('now', new \DateTimeZone('UTC')), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev')));
+        $dateRange5 = new DateRange(new \DateTime('now', new \DateTimeZone('Europe/Kiev')), new \DateTime('tomorrow', new \DateTimeZone('UTC')));
 
-        self::assertTrue($dateRange1->isEqual($dateRange2));
-        self::assertFalse($dateRange1->isEqual($dateRange3));
+        self::assertTrue($dateRange1->isEqual($dateRange2), 'Since/till timezone are same');
+        self::assertFalse($dateRange1->isEqual($dateRange3), 'Since/till timezones are different');
+        self::assertFalse($dateRange1->isEqual($dateRange4), 'Till timezone is different');
+        self::assertFalse($dateRange1->isEqual($dateRange5), 'Since timezone is different');
     }
 }

@@ -84,12 +84,10 @@ class DateTimeHelperTest extends TestCase
     public function testGetDatesFromDateRangeAsArrayOfObjects(string $timeZoneName, string $since, string $till, array $expectedDates): void
     {
         $this->dateRange
-            ->expects(self::any())
             ->method('getSince')
             ->willReturn(new \DateTimeImmutable($since, new \DateTimeZone($timeZoneName)))
         ;
         $this->dateRange
-            ->expects(self::any())
             ->method('getTill')
             ->willReturn(new \DateTimeImmutable($till, new \DateTimeZone($timeZoneName)))
         ;
@@ -109,12 +107,10 @@ class DateTimeHelperTest extends TestCase
     public function testGetDatesFromDateRangeAsArrayOfStrings(string $timeZoneName, string $since, string $till, array $expectedDates): void
     {
         $this->dateRange
-            ->expects(self::any())
             ->method('getSince')
             ->willReturn(new \DateTimeImmutable($since, new \DateTimeZone($timeZoneName)))
         ;
         $this->dateRange
-            ->expects(self::any())
             ->method('getTill')
             ->willReturn(new \DateTimeImmutable($till, new \DateTimeZone($timeZoneName)))
         ;
