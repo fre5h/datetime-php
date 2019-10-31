@@ -51,15 +51,35 @@ class DateRangeTest extends TestCase
 
     public function testIsEqual(): void
     {
-        $dateRange1 = new DateRange(new \DateTime('now', new \DateTimeZone('UTC')), new \DateTime('tomorrow', new \DateTimeZone('UTC')));
-        $dateRange2 = new DateRange(new \DateTime('now', new \DateTimeZone('UTC')), new \DateTime('tomorrow', new \DateTimeZone('UTC')));
-        $dateRange3 = new DateRange(new \DateTime('now', new \DateTimeZone('Europe/Kiev')), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev')));
-        $dateRange4 = new DateRange(new \DateTime('now', new \DateTimeZone('UTC')), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev')));
-        $dateRange5 = new DateRange(new \DateTime('now', new \DateTimeZone('Europe/Kiev')), new \DateTime('tomorrow', new \DateTimeZone('UTC')));
+        $dateRange1 = new DateRange(
+            new \DateTime('now', new \DateTimeZone('UTC')),
+            new \DateTime('tomorrow', new \DateTimeZone('UTC'))
+        );
+        $dateRange2 = new DateRange(
+            new \DateTime('now', new \DateTimeZone('UTC')),
+            new \DateTime('tomorrow', new \DateTimeZone('UTC'))
+        );
+        $dateRange3 = new DateRange(
+            new \DateTime('yesterday', new \DateTimeZone('UTC')),
+            new \DateTime('tomorrow', new \DateTimeZone('UTC'))
+        );
+        $dateRange4 = new DateRange(
+            new \DateTime('now', new \DateTimeZone('UTC')),
+            new \DateTime('now', new \DateTimeZone('UTC'))
+        );
+        $dateRange5 = new DateRange(
+            new \DateTime('yesterday', new \DateTimeZone('UTC')),
+            new \DateTime('now', new \DateTimeZone('UTC'))
+        );
+        $dateRange6 = new DateRange(
+            new \DateTime('now', new \DateTimeZone('Europe/Kiev')),
+            new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev'))
+        );
 
-        self::assertTrue($dateRange1->isEqual($dateRange2), 'Since/till timezone are same');
-        self::assertFalse($dateRange1->isEqual($dateRange3), 'Since/till timezones are different');
-        self::assertFalse($dateRange1->isEqual($dateRange4), 'Till timezone is different');
-        self::assertFalse($dateRange1->isEqual($dateRange5), 'Since timezone is different');
+        self::assertTrue($dateRange1->isEqual($dateRange2), 'Since/till timezones are same, time is same');
+        self::assertFalse($dateRange1->isEqual($dateRange3), 'Since/till timezones are same, since time is different');
+        self::assertFalse($dateRange1->isEqual($dateRange4), 'Since/till timezones are same, till time is different');
+        self::assertFalse($dateRange1->isEqual($dateRange5), 'Since/till timezones are same, since/till time is different');
+        self::assertFalse($dateRange1->isEqual($dateRange6), 'Since/till timezones are different');
     }
 }
