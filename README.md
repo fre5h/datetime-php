@@ -3,7 +3,7 @@
 PHP library with additional functions for processing dates & times. :clock12: :calendar:
 
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/fre5h/datetime-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/fre5h/datetime-php/)
-[![Build Status](https://img.shields.io/travis/fre5h/datetime-php.svg?style=flat-square)](https://travis-ci.org/fre5h/datetime-php)
+[![Build Status](https://img.shields.io/travis/fre5h/datetime-php/master.svg?style=flat-square)](https://travis-ci.org/fre5h/datetime-php)
 [![CodeCov](https://img.shields.io/codecov/c/github/fre5h/datetime-php.svg?style=flat-square)](https://codecov.io/github/fre5h/datetime-php)
 [![License](https://img.shields.io/packagist/l/fresh/datetime.svg?style=flat-square)](https://packagist.org/packages/fresh/datetime)
 [![Latest Stable Version](https://img.shields.io/packagist/v/fresh/datetime.svg?style=flat-square)](https://packagist.org/packages/fresh/datetime)
