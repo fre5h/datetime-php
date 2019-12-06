@@ -1,6 +1,6 @@
 {
     "name": "fresh/datetime",
-    "description": "PHP library with additional functions for processing dates & times.",
+    "description": "PHP library that provides additional functions for processing dates & times.",
     "keywords": ["datetime", "date", "time", "timezone", "midnight"],
     "homepage": "https://github.com/fre5h/datetime-php",
     "type": "library",
