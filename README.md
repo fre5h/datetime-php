@@ -1,6 +1,6 @@
 # DateTime
 
-PHP library with additional functions for processing dates & times. :clock12: :calendar:
+:clock12: :calendar: :elephant: PHP library that provides additional functions for processing dates & times.
 
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/fre5h/datetime-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/fre5h/datetime-php/)
 [![Build Status](https://img.shields.io/travis/fre5h/datetime-php/master.svg?style=flat-square)](https://travis-ci.org/fre5h/datetime-php)

@@ -1,6 +1,6 @@
 {
     "name": "fresh/datetime",
-    "description": "PHP library with additional functions for processing dates & times.",
+    "description": "PHP library that provides additional functions for processing dates & times.",
     "keywords": ["datetime", "date", "time", "timezone", "midnight"],
     "homepage": "https://github.com/fre5h/datetime-php",
     "type": "library",
@@ -24,7 +24,7 @@
         "johnkary/phpunit-speedtrap": "^3.1",
         "phpstan/phpstan": "^0.11",
         "phpstan/phpstan-phpunit": "^0.11",
-        "phpunit/phpunit": "^8.4",
+        "phpunit/phpunit": "^8.5",
         "slam/phpstan-extensions": "^3.6",
         "squizlabs/php_codesniffer": "^3.5",
         "thecodingmachine/phpstan-strict-rules": "^0.11"
