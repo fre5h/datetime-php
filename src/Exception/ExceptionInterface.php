@@ -13,10 +13,10 @@ declare(strict_types=1);
 namespace Fresh\DateTime\Exception;
 
 /**
- * LogicException.
+ * ExceptionInterface.
  *
  * @author Artem Henvald <genvaldartem@gmail.com>
  */
-class LogicException extends \LogicException implements ExceptionInterface
+interface ExceptionInterface extends \Throwable
 {
 }
