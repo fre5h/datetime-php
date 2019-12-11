@@ -25,7 +25,8 @@ class LogicExceptionTest extends TestCase
 {
     public function testConstructor(): void
     {
-        self::assertInstanceOf(\LogicException::class, new LogicException());
-        self::assertInstanceOf(ExceptionInterface::class, new LogicException());
+        $logicException = new LogicException();
+        self::assertInstanceOf(\LogicException::class, $logicException);
+        self::assertInstanceOf(ExceptionInterface::class, $logicException);
     }
 }

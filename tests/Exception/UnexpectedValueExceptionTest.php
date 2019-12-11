@@ -25,7 +25,8 @@ class UnexpectedValueExceptionTest extends TestCase
 {
     public function testConstructor(): void
     {
-        self::assertInstanceOf(\UnexpectedValueException::class, new UnexpectedValueException());
-        self::assertInstanceOf(ExceptionInterface::class, new UnexpectedValueException());
+        $unexpectedValueException = new UnexpectedValueException();
+        self::assertInstanceOf(\UnexpectedValueException::class, $unexpectedValueException);
+        self::assertInstanceOf(ExceptionInterface::class, $unexpectedValueException);
     }
 }
