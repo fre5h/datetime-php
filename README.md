@@ -27,9 +27,86 @@ See [CONTRIBUTING](https://github.com/fre5h/datetime-php/blob/master/.github/CON
 
 ## Features
 
-* Common time constants (number of seconds in a minute, number of minutes in an hour, etc.).
-* Methods for creating current `\DateTime` and `\DateTimeImmutable` objects.
-* Method for creating `\DateTimeZone` object.
-* Immutable ValueObject `DateRange`.
-* Getting array of objects/strings of all dates in date range.
-* DateTimeCloner allows to clone dates into `\DateTime` or `\DateTimeImmutable` instances.
+### Popular time constants
+
+Number of seconds in a minute, number of minutes in an hour, etc.
+
+```php
+use Fresh\DateTime\TimeConstants;
+
+echo TimeConstants::NUMBER_OF_SECONDS_IN_AN_HOUR; // etc.
+```
+
+### Methods for creating current `\DateTime` and `\DateTimeImmutable` objects (convenient for testing)
+
+If you use separate class for creating datetime objects, you can mock these methods in your code and have the expected `\DateTime` object what you need.
+
+```php
+use Fresh\DateTime\DateTimeHelper;
+
+$dateTimeHelper = new DateTimeHelper();
+
+$now1 = $dateTimeHelper->getCurrentDatetime();
+$now2 = $dateTimeHelper->getCurrentDatetime(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
+$now3 = $dateTimeHelper->getCurrentDatetimeImmutable();
+$now4 = $dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
+```
+
+### Method for creating `\DateTimeZone` object
+
+If you create a `\DateTimeZone` object directly in your code, you will not be able to mock it in tests.
+So there is a specific method for creating timezone object.
+
+```php
+use Fresh\DateTime\DateTimeHelper;
+
+$dateTimeHelper = new DateTimeHelper();
+
+$dateTimeZone1 = $dateTimeHelper->createDateTimeZone(); // UTC by default
+$dateTimeZone2 = $dateTimeHelper->createDateTimeZone('Europe/Kiev'); // Or with custom timezone
+```
+
+### Immutable ValueObject `DateRange`
+
+You often need to manipulate with since/till dates, so-called date ranges.
+By its nature, date range is a `ValueObject`, it can be reused many times for different purposes.
+This library provides a `DateRange` immutable class, which is not able to be changed after its creation. 
+
+```php
+use Fresh\DateTime\DateRange;
+
+$dateRange1 = new DateRange(new \DateTime('yesterday'), new \DateTime('tomorrow'));
+$dateRange2 = new DateRange(new \DateTime('yesterday'), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev')));
+
+// There is also the `isEqual` method to compare two DateRange objects.
+$dateRange1->isEqual($dateRange2); // Returns FALSE, because date ranges have different timezones
+```
+
+### Getting array of objects/strings of all dates in date range
+
+```php
+use Fresh\DateTime\DateTimeHelper;
+use Fresh\DateTime\DateRange;
+
+$dateTimeHelper = new DateTimeHelper();
+
+$dateRange = new DateRange(new \DateTime('1970-01-01'), new \DateTime('1970-01-03'));
+
+// Creates array with values ['1970-01-01', '1970-01-02', '1970-01-03']
+$datesAsStrings = $dateTimeHelper->getDatesFromDateRangeAsArrayOfStrings($dateRange);
+
+// Creates array of \DateTime objects for dates: '1970-01-01', '1970-01-02', '1970-01-03'
+$datesAsObjects = $dateTimeHelper->getDatesFromDateRangeAsArrayOfObjects($dateRange);
+```
+
+### DateTimeCloner allows to clone dates into `\DateTime` or `\DateTimeImmutable` instances
+
+```php
+use Fresh\DateTime\DateTimeCloner;
+
+$dateTimeCloner = new DateTimeCloner();
+
+$date1 = new \DateTime();
+$dateImmutable1 = $dateTimeCloner->cloneIntoDateTimeImmutable($date1); // Returns \DateTimeImmutable object
+$date2 = $dateTimeCloner->cloneIntoDateTime($dateImmutable1); // Returns \DateTime object
+```
