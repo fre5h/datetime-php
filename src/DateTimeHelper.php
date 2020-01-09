@@ -21,6 +21,7 @@ class DateTimeHelper implements DateTimeHelperInterface
 {
     private const INTERNAL_DATE_FORMAT = 'Y-m-d';
 
+    /** @var object[] */
     private $datesCache = [];
 
     /**
