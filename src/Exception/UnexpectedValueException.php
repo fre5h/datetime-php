@@ -17,6 +17,6 @@ namespace Fresh\DateTime\Exception;
  *
  * @author Artem Henvald <genvaldartem@gmail.com>
  */
-class UnexpectedValueException extends \UnexpectedValueException
+class UnexpectedValueException extends \UnexpectedValueException implements ExceptionInterface
 {
 }
