@@ -52,6 +52,15 @@ $now3 = $dateTimeHelper->getCurrentDatetimeImmutable();
 $now4 = $dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
 ```
 
+### Method for getting current timestamp
+
+```php
+$dateTimeHelper = new DateTimeHelper();
+
+$timestamp = $dateTimeHelper->getCurrentTimestamp();
+
+```
+
 ### Method for creating `\DateTimeZone` object
 
 If you create a `\DateTimeZone` object directly in your code, you will not be able to mock it in tests.
