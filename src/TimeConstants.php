@@ -16,8 +16,6 @@ namespace Fresh\DateTime;
  * TimeConstants.
  *
  * @author Artem Henvald <genvaldartem@gmail.com>
- *
- * @codeCoverageIgnore
  */
 final class TimeConstants
 {
