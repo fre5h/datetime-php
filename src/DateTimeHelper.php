@@ -35,6 +35,14 @@ class DateTimeHelper implements DateTimeHelperInterface
     /**
      * {@inheritdoc}
      */
+    public function getCurrentTimestamp(): int
+    {
+        return \time();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCurrentDatetime(?\DateTimeZone $timeZone = null): \DateTime
     {
         return new \DateTime('now', $timeZone);
