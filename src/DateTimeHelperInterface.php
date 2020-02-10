@@ -29,6 +29,11 @@ interface DateTimeHelperInterface
     public function createDateTimeZone(string $timeZoneName = 'UTC'): \DateTimeZone;
 
     /**
+     * @return int
+     */
+    public function getCurrentTimestamp(): int;
+
+    /**
      * @param \DateTimeZone|null $timeZone
      *
      * @return \DateTime
