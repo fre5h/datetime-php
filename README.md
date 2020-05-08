@@ -1,6 +1,6 @@
 # DateTime
 
-:clock12: :calendar: :elephant: PHP library that provides additional functions for processing dates & times.
+🕒 📅 🐘 PHP library that provides additional functions for processing dates & times.
 
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/fre5h/datetime-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/fre5h/datetime-php/)
 [![Build Status](https://img.shields.io/travis/fre5h/datetime-php/master.svg?style=flat-square)](https://travis-ci.org/fre5h/datetime-php)
@@ -13,19 +13,15 @@
 
 [![SymfonyInsight](https://insight.symfony.com/projects/5dc702f7-d0cf-4cf0-a053-33ea2ae0e1c6/big.svg)](https://insight.symfony.com/projects/5dc702f7-d0cf-4cf0-a053-33ea2ae0e1c6)
 
-## Requirements
+## Requirements 🧐
 
 * PHP 7.3.0 *and later*
 
-## Install via Composer 🚀
+## Installation 🌱
 
 ```composer req fresh/datetime```
 
-## Contributing
-
-See [CONTRIBUTING](https://github.com/fre5h/datetime-php/blob/master/.github/CONTRIBUTING.md) file.
-
-## Features
+## Features 🎁
 
 ### Popular time constants
 
@@ -119,3 +115,7 @@ $date1 = new \DateTime();
 $dateImmutable1 = $dateTimeCloner->cloneIntoDateTimeImmutable($date1); // Returns \DateTimeImmutable object
 $date2 = $dateTimeCloner->cloneIntoDateTime($dateImmutable1); // Returns \DateTime object
 ```
+
+## Contributing 🤝
+
+See [CONTRIBUTING](https://github.com/fre5h/datetime-php/blob/master/.github/CONTRIBUTING.md) file.
