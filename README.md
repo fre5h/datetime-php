@@ -115,8 +115,8 @@ use Fresh\DateTime\DateTimeCloner;
 $dateTimeCloner = new DateTimeCloner();
 
 $date1 = new DateTime();
-$dateImmutable1 = $dateTimeCloner->cloneIntoDateTimeImmutable($date1); // Returns \DateTimeImmutable object
-$date2 = $dateTimeCloner->cloneIntoDateTime($dateImmutable1); // Returns \DateTime object
+$dateImmutable1 = $dateTimeCloner::cloneIntoDateTimeImmutable($date1); // Returns \DateTimeImmutable object
+$date2 = $dateTimeCloner::cloneIntoDateTime($dateImmutable1); // Returns \DateTime object
 ```
 
 ## Contributing 🤝

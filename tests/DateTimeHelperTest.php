@@ -62,14 +62,15 @@ class DateTimeHelperTest extends TestCase
 
     public function testCreateDateTimeZoneUtc(): void
     {
-        $timezone = $this->dateTimeHelper->createDateTimeZoneUtc();
-        self::assertInstanceOf(\DateTimeZone::class, $timezone);
-        self::assertSame('UTC', $timezone->getName());
+        $timezone1 = $this->dateTimeHelper->createDateTimeZoneUtc();
+        self::assertInstanceOf(\DateTimeZone::class, $timezone1);
+        self::assertSame('UTC', $timezone1->getName());
 
         // Second call hits cache
-        $timezone = $this->dateTimeHelper->createDateTimeZoneUtc();
-        self::assertInstanceOf(\DateTimeZone::class, $timezone);
-        self::assertSame('UTC', $timezone->getName());
+        $timezone2 = $this->dateTimeHelper->createDateTimeZoneUtc();
+        self::assertInstanceOf(\DateTimeZone::class, $timezone2);
+        self::assertSame('UTC', $timezone2->getName());
+        self::assertEquals($timezone1, $timezone2);
     }
 
     public function testGetCurrentTimestamp(): void
