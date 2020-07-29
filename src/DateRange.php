@@ -62,10 +62,13 @@ final class DateRange implements DateRangeInterface
      */
     public function isEqual(DateRangeInterface $dateRange): bool
     {
-        return $this->since->format(self::INTERNAL_DATE_FORMAT) === $dateRange->getSince()->format(self::INTERNAL_DATE_FORMAT)
-            && $this->till->format(self::INTERNAL_DATE_FORMAT) === $dateRange->getTill()->format(self::INTERNAL_DATE_FORMAT)
-            && $this->since->getTimezone()->getName() === $dateRange->getTill()->getTimezone()->getName()
-            && $this->till->getTimezone()->getName() === $dateRange->getTill()->getTimezone()->getName();
+        $dateRangeSince = $dateRange->getSince();
+        $dateRangeTill = $dateRange->getTill();
+
+        return $this->since->format(self::INTERNAL_DATE_FORMAT) === $dateRangeSince->format(self::INTERNAL_DATE_FORMAT)
+               && $this->till->format(self::INTERNAL_DATE_FORMAT) === $dateRangeTill->format(self::INTERNAL_DATE_FORMAT)
+               && $this->since->getTimezone()->getName() === $dateRangeSince->getTimezone()->getName()
+               && $this->till->getTimezone()->getName() === $dateRangeTill->getTimezone()->getName();
     }
 
     /**

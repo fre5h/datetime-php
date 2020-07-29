@@ -60,6 +60,12 @@ class DateTimeHelperTest extends TestCase
         self::assertInstanceOf(\DateTimeZone::class, $timezone);
     }
 
+    public function testGetCurrentTimestamp(): void
+    {
+        $timestamp = $this->dateTimeHelper->getCurrentTimestamp();
+        self::assertIsInt($timestamp);
+    }
+
     public function testGetCurrentDatetime(): void
     {
         $now = $this->dateTimeHelper->getCurrentDatetime();
@@ -80,16 +86,21 @@ class DateTimeHelperTest extends TestCase
         self::assertSame('Europe/Kiev', $now->getTimezone()->getName());
     }
 
-    /** @dataProvider dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings */
+    /**
+     * @param string $timeZoneName
+     * @param string $since
+     * @param string $till
+     * @param array  $expectedDates
+     *
+     * @dataProvider dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings
+     */
     public function testGetDatesFromDateRangeAsArrayOfObjects(string $timeZoneName, string $since, string $till, array $expectedDates): void
     {
         $this->dateRange
-            ->expects(self::any())
             ->method('getSince')
             ->willReturn(new \DateTimeImmutable($since, new \DateTimeZone($timeZoneName)))
         ;
         $this->dateRange
-            ->expects(self::any())
             ->method('getTill')
             ->willReturn(new \DateTimeImmutable($till, new \DateTimeZone($timeZoneName)))
         ;
@@ -105,16 +116,21 @@ class DateTimeHelperTest extends TestCase
         self::assertSame($expectedDates, $dates);
     }
 
-    /** @dataProvider dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings */
+    /**
+     * @param string $timeZoneName
+     * @param string $since
+     * @param string $till
+     * @param array  $expectedDates
+     *
+     * @dataProvider dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings
+     */
     public function testGetDatesFromDateRangeAsArrayOfStrings(string $timeZoneName, string $since, string $till, array $expectedDates): void
     {
         $this->dateRange
-            ->expects(self::any())
             ->method('getSince')
             ->willReturn(new \DateTimeImmutable($since, new \DateTimeZone($timeZoneName)))
         ;
         $this->dateRange
-            ->expects(self::any())
             ->method('getTill')
             ->willReturn(new \DateTimeImmutable($till, new \DateTimeZone($timeZoneName)))
         ;

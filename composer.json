@@ -1,6 +1,6 @@
 {
     "name": "fresh/datetime",
-    "description": "PHP library with additional functions for processing dates & times.",
+    "description": "PHP library that provides additional functions for processing dates & times.",
     "keywords": ["datetime", "date", "time", "timezone", "midnight"],
     "homepage": "https://github.com/fre5h/datetime-php",
     "type": "library",
@@ -20,7 +20,7 @@
         "php": ">=7.3.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.15",
+        "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpunit/phpunit": "^9.2",

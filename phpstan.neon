@@ -9,3 +9,4 @@ parameters:
         - '%rootDir%/../../../vendor/*'
     fileExtensions:
         - 'php'
+    checkMissingIterableValueType: false

@@ -21,9 +21,11 @@ class DateTimeHelper implements DateTimeHelperInterface
 {
     private const INTERNAL_DATE_FORMAT = 'Y-m-d';
 
+    /** @var mixed[] */
     private $datesCache = [];
 
-    private $timeZoneUtc = null;
+    /** @var null \DateTimeZone|null */
+    private $timeZoneUtc;
 
     /**
      * {@inheritdoc}
@@ -31,6 +33,14 @@ class DateTimeHelper implements DateTimeHelperInterface
     public function createDateTimeZone(string $timeZoneName = 'UTC'): \DateTimeZone
     {
         return new \DateTimeZone($timeZoneName);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrentTimestamp(): int
+    {
+        return \time();
     }
 
     /**
