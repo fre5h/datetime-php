@@ -24,12 +24,27 @@ class DateTimeHelper implements DateTimeHelperInterface
     /** @var mixed[] */
     private $datesCache = [];
 
+    /** @var \DateTimeZone|null */
+    private $timeZoneUtc;
+
     /**
      * {@inheritdoc}
      */
     public function createDateTimeZone(string $timeZoneName = 'UTC'): \DateTimeZone
     {
         return new \DateTimeZone($timeZoneName);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createDateTimeZoneUtc(): \DateTimeZone
+    {
+        if (!$this->timeZoneUtc instanceof \DateTimeZone) {
+            $this->timeZoneUtc = new \DateTimeZone('UTC');
+        }
+
+        return $this->timeZoneUtc;
     }
 
     /**
@@ -51,9 +66,25 @@ class DateTimeHelper implements DateTimeHelperInterface
     /**
      * {@inheritdoc}
      */
+    public function getCurrentDatetimeUtc(): \DateTime
+    {
+        return new \DateTime('now', $this->createDateTimeZoneUtc());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCurrentDatetimeImmutable(?\DateTimeZone $timeZone = null): \DateTimeImmutable
     {
         return new \DateTimeImmutable('now', $timeZone);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrentDatetimeImmutableUtc(): \DateTimeImmutable
+    {
+        return new \DateTimeImmutable('now', $this->createDateTimeZoneUtc());
     }
 
     /**

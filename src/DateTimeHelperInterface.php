@@ -29,6 +29,11 @@ interface DateTimeHelperInterface
     public function createDateTimeZone(string $timeZoneName = 'UTC'): \DateTimeZone;
 
     /**
+     * @return \DateTimeZone
+     */
+    public function createDateTimeZoneUtc(): \DateTimeZone;
+
+    /**
      * @return int
      */
     public function getCurrentTimestamp(): int;
@@ -41,11 +46,21 @@ interface DateTimeHelperInterface
     public function getCurrentDatetime(?\DateTimeZone $timeZone = null): \DateTime;
 
     /**
+     * @return \DateTime
+     */
+    public function getCurrentDatetimeUtc(): \DateTime;
+
+    /**
      * @param \DateTimeZone|null $timeZone
      *
      * @return \DateTimeImmutable
      */
     public function getCurrentDatetimeImmutable(?\DateTimeZone $timeZone = null): \DateTimeImmutable;
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getCurrentDatetimeImmutableUtc(): \DateTimeImmutable;
 
     /**
      * @param DateRangeInterface $dateRange

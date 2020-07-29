@@ -11,9 +11,7 @@
 [![StyleCI](https://styleci.io/repos/190854938/shield?style=flat-square)](https://styleci.io/repos/190854938)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat-square)](https://gitter.im/fre5h/datetime-php)
 
-[![SymfonyInsight](https://insight.symfony.com/projects/5dc702f7-d0cf-4cf0-a053-33ea2ae0e1c6/big.svg)](https://insight.symfony.com/projects/5dc702f7-d0cf-4cf0-a053-33ea2ae0e1c6)
-
-## Requirements 🧐
+## Requirements
 
 * PHP 7.3.0 *and later*
 
@@ -44,13 +42,17 @@ $dateTimeHelper = new DateTimeHelper();
 
 $now1 = $dateTimeHelper->getCurrentDatetime();
 $now2 = $dateTimeHelper->getCurrentDatetime(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
-$now3 = $dateTimeHelper->getCurrentDatetimeImmutable();
-$now4 = $dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
+$now3 = $dateTimeHelper->getCurrentDatetimeUtc(); // Always in UTC
+$now4 = $dateTimeHelper->getCurrentDatetimeImmutable();
+$now5 = $dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
+$now6 = $dateTimeHelper->getCurrentDatetimeImmutableUtc(); // Always in UTC
 ```
 
 ### Method for getting current timestamp
 
 ```php
+use Fresh\DateTime\DateTimeHelper;
+
 $dateTimeHelper = new DateTimeHelper();
 
 $timestamp = $dateTimeHelper->getCurrentTimestamp();
@@ -69,6 +71,7 @@ $dateTimeHelper = new DateTimeHelper();
 
 $dateTimeZone1 = $dateTimeHelper->createDateTimeZone(); // UTC by default
 $dateTimeZone2 = $dateTimeHelper->createDateTimeZone('Europe/Kiev'); // Or with custom timezone
+$dateTimeZone3 = $dateTimeHelper->createDateTimeZoneUtc(); // Another method to get UTC timezone
 ```
 
 ### Immutable ValueObject `DateRange`
@@ -112,8 +115,8 @@ use Fresh\DateTime\DateTimeCloner;
 $dateTimeCloner = new DateTimeCloner();
 
 $date1 = new \DateTime();
-$dateImmutable1 = $dateTimeCloner->cloneIntoDateTimeImmutable($date1); // Returns \DateTimeImmutable object
-$date2 = $dateTimeCloner->cloneIntoDateTime($dateImmutable1); // Returns \DateTime object
+$dateImmutable1 = $dateTimeCloner::cloneIntoDateTimeImmutable($date1); // Returns \DateTimeImmutable object
+$date2 = $dateTimeCloner::cloneIntoDateTime($dateImmutable1); // Returns \DateTime object
 ```
 
 ## Contributing 🤝

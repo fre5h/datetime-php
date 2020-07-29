@@ -23,8 +23,8 @@
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
-        "phpunit/phpunit": "^9.0",
-        "slam/phpstan-extensions": "^4.0",
+        "phpunit/phpunit": "^9.2",
+        "slam/phpstan-extensions": "^5.0",
         "squizlabs/php_codesniffer": "^3.5",
         "thecodingmachine/phpstan-strict-rules": "^0.12"
     },
