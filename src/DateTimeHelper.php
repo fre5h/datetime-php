@@ -38,14 +38,6 @@ class DateTimeHelper implements DateTimeHelperInterface
     /**
      * {@inheritdoc}
      */
-    public function getCurrentTimestamp(): int
-    {
-        return \time();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function createDateTimeZoneUtc(): \DateTimeZone
     {
         if (!$this->timeZoneUtc instanceof \DateTimeZone) {
@@ -53,6 +45,14 @@ class DateTimeHelper implements DateTimeHelperInterface
         }
 
         return $this->timeZoneUtc;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrentTimestamp(): int
+    {
+        return \time();
     }
 
     /**
