@@ -24,7 +24,7 @@ class DateTimeHelper implements DateTimeHelperInterface
     /** @var mixed[] */
     private $datesCache = [];
 
-    /** @var null \DateTimeZone|null */
+    /** @var \DateTimeZone|null */
     private $timeZoneUtc;
 
     /**
