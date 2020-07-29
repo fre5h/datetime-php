@@ -41,10 +41,10 @@ use Fresh\DateTime\DateTimeHelper;
 $dateTimeHelper = new DateTimeHelper();
 
 $now1 = $dateTimeHelper->getCurrentDatetime();
-$now2 = $dateTimeHelper->getCurrentDatetime(new DateTimeZone('Europe/Kiev')); // Or with custom timezone
+$now2 = $dateTimeHelper->getCurrentDatetime(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
 $now3 = $dateTimeHelper->getCurrentDatetimeUtc(); // Always in UTC
 $now4 = $dateTimeHelper->getCurrentDatetimeImmutable();
-$now5 = $dateTimeHelper->getCurrentDatetimeImmutable(new DateTimeZone('Europe/Kiev')); // Or with custom timezone
+$now5 = $dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
 $now6 = $dateTimeHelper->getCurrentDatetimeImmutableUtc(); // Always in UTC
 ```
 
@@ -83,8 +83,8 @@ This library provides a `DateRange` immutable class, which is not able to be cha
 ```php
 use Fresh\DateTime\DateRange;
 
-$dateRange1 = new DateRange(new DateTime('yesterday'), new DateTime('tomorrow'));
-$dateRange2 = new DateRange(new DateTime('yesterday'), new DateTime('tomorrow', new DateTimeZone('Europe/Kiev')));
+$dateRange1 = new DateRange(new \DateTime('yesterday'), new \DateTime('tomorrow'));
+$dateRange2 = new DateRange(new \DateTime('yesterday'), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev')));
 
 // There is also the `isEqual` method to compare two DateRange objects.
 $dateRange1->isEqual($dateRange2); // Returns FALSE, because date ranges have different timezones
@@ -98,7 +98,7 @@ use Fresh\DateTime\DateRange;
 
 $dateTimeHelper = new DateTimeHelper();
 
-$dateRange = new DateRange(new DateTime('1970-01-01'), new DateTime('1970-01-03'));
+$dateRange = new DateRange(new \DateTime('1970-01-01'), new \DateTime('1970-01-03'));
 
 // Creates array with values ['1970-01-01', '1970-01-02', '1970-01-03']
 $datesAsStrings = $dateTimeHelper->getDatesFromDateRangeAsArrayOfStrings($dateRange);
@@ -114,7 +114,7 @@ use Fresh\DateTime\DateTimeCloner;
 
 $dateTimeCloner = new DateTimeCloner();
 
-$date1 = new DateTime();
+$date1 = new \DateTime();
 $dateImmutable1 = $dateTimeCloner::cloneIntoDateTimeImmutable($date1); // Returns \DateTimeImmutable object
 $date2 = $dateTimeCloner::cloneIntoDateTime($dateImmutable1); // Returns \DateTime object
 ```
