@@ -5,7 +5,7 @@ sudo: false
 php:
   - 7.3
   - 7.4
-  - 8.0  
+  - 8.0snapshot
 
 matrix:
   fast_finish: true
