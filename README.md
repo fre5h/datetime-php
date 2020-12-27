@@ -13,7 +13,7 @@
 
 ## Requirements
 
-* PHP 7.3.0 *and later*
+* PHP 7.3, 7.4, 8.0
 
 ## Installation 🌱
 
