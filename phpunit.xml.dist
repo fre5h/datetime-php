@@ -11,12 +11,12 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
-            <directory>./src/</directory>
-            <exclude>
-                <file>./src/TimeConstants.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
+    <coverage includeUncoveredFiles="false">
+        <include>
+            <directory suffix=".php">./src/</directory>
+        </include>
+        <exclude>
+            <file>./src/TimeConstants.php</file>
+        </exclude>
+    </coverage>
 </phpunit>
