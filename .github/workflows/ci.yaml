@@ -51,7 +51,7 @@ jobs:
         working-directory: './'
 
       - name: 'Run CodeSniffer'
-        run: ./vendor/bin/phpcs ./ -p --encoding=utf-8 --extensions=php --ignore="vendor|Tests" --standard=./vendor/escapestudios/symfony2-coding-standard/Symfony
+        run: ./vendor/bin/phpcs ./ -p --encoding=utf-8 --extensions=php --ignore=vendor --ignore=tests --standard=phpcs.xml
 
   static-analysis:
     needs: composer-install
