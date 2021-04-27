@@ -49,6 +49,26 @@ class DateTimeRangeTest extends TestCase
         new DateTimeRange($since, $till);
     }
 
+    public function testGetTimezone(): void
+    {
+        $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+        $till = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+
+        $dateTimeRange = new DateTimeRange($since, $till);
+
+        self::assertEquals('Europe/Kiev', $dateTimeRange->getTimezone()->getName());
+    }
+
+    public function testGetTimezoneName(): void
+    {
+        $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+        $till = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+
+        $dateTimeRange = new DateTimeRange($since, $till);
+
+        self::assertEquals('Europe/Kiev', $dateTimeRange->getTimezoneName());
+    }
+
     public function testIsEqual(): void
     {
         $dateTimeRange1 = new DateTimeRange(
@@ -88,20 +108,21 @@ class DateTimeRangeTest extends TestCase
      * @param DateTimeRange $dateTimeRange2
      * @param bool      $intersects
      *
-     * @dataProvider dataProviderForTestIntersects
+     * @dataProvider dataProviderForTestIntersectsSameDates
+     * @dataProvider dataProviderForTestIntersectsDifferentDates
      */
     public function testIntersects(DateTimeRange $dateTimeRange1, DateTimeRange $dateTimeRange2, bool $intersects): void
     {
         self::assertSame($intersects, $dateTimeRange1->intersects($dateTimeRange2));
     }
 
-    public static function dataProviderForTestIntersects(): iterable
+    public static function dataProviderForTestIntersectsSameDates(): iterable
     {
         // <time of date range 1>
         // [time of date range 2]
 
-        // [14:30] <14:45> <15:15> [15:30]
-        yield 'date range 1 is fully inside date range 2' => [
+        // [2000-01-01 14:30] < 2000-01-01 14:45> <2000-01-01 15:15> [2000-01-01 15:30]
+        yield 'date range 1 is fully inside date range 2 (same dates)' => [
             'date_range_1' => new DateTimeRange(
                 new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:15:00', new \DateTimeZone('UTC'))
@@ -113,8 +134,8 @@ class DateTimeRangeTest extends TestCase
             'intersects' => true,
         ];
 
-        // <14:30> [14:45] [15:15] <15:30>
-        yield 'date range 2 is fully inside date range 1' => [
+        // <2000-01-01 14:30> [2000-01-01 14:45] [2000-01-01 15:15] <2000-01-01 15:30>
+        yield 'date range 2 is fully inside date range 1 (same dates)' => [
             'date_range_1' => new DateTimeRange(
                 new \DateTime('2000-01-01 14:30:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:30:00', new \DateTimeZone('UTC'))
@@ -126,8 +147,8 @@ class DateTimeRangeTest extends TestCase
             'intersects' => true,
         ];
 
-        // [14:45] <15:00> [15:05] <15:15>
-        yield 'end of date range 2 intersects with start of date range 1' => [
+        // [2000-01-01 14:45] <2000-01-01 15:00> [2000-01-01 15:05] <2000-01-01 15:15>
+        yield 'end of date range 2 intersects with start of date range 1 (same dates)' => [
             'date_range_1' => new DateTimeRange(
                 new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:15:00', new \DateTimeZone('UTC'))
@@ -139,8 +160,8 @@ class DateTimeRangeTest extends TestCase
             'intersects' => true,
         ];
 
-        // <14:45> [15:00] <15:05> [15:15]
-        yield 'end of date range 1 intersects with start of date range 2' => [
+        // <2000-01-01 14:45> [2000-01-01 15:00] <2000-01-01 15:05> [2000-01-01 15:15]
+        yield 'end of date range 1 intersects with start of date range 2 (same dates)' => [
             'date_range_1' => new DateTimeRange(
                 new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:05:00', new \DateTimeZone('UTC'))
@@ -152,8 +173,8 @@ class DateTimeRangeTest extends TestCase
             'intersects' => true,
         ];
 
-        // <14:45> [14:45] <15:05> [15:05]
-        yield 'date range 1 equals date range 2' => [
+        // <2000-01-01 14:45> [2000-01-01 14:45] <2000-01-01 15:05> [2000-01-01 15:05]
+        yield 'date range 1 equals date range 2 (same dates)' => [
             'date_range_1' => new DateTimeRange(
                 new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:05:00', new \DateTimeZone('UTC'))
@@ -165,8 +186,8 @@ class DateTimeRangeTest extends TestCase
             'intersects' => true,
         ];
 
-        // <14:45> <15:00> [15:00] [15:15]
-        yield 'date range 1 before date range 2 without gap' => [
+        // <2000-01-01 14:45> <2000-01-01 15:00> [2000-01-01 15:00] [2000-01-01 15:15]
+        yield 'date range 1 before date range 2 without gap (same dates)' => [
             'date_range_1' => new DateTimeRange(
                 new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC'))
@@ -178,8 +199,8 @@ class DateTimeRangeTest extends TestCase
             'intersects' => false,
         ];
 
-        // <14:45> <15:00> ... [20:00] [20:15]
-        yield 'date range 1 before date range 2 with gap' => [
+        // <2000-01-01 14:45> <2000-01-01 15:00> ... [2000-01-01 20:00] [2000-01-01 20:15]
+        yield 'date range 1 before date range 2 with gap (same dates)' => [
             'date_range_1' => new DateTimeRange(
                 new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC'))
@@ -191,8 +212,8 @@ class DateTimeRangeTest extends TestCase
             'intersects' => false,
         ];
 
-        // [14:45] [15:00] <15:00> <15:15>
-        yield 'date range 2 before date range 1 without gap' => [
+        // [2000-01-01 14:45] [2000-01-01 15:00] <2000-01-01 15:00> <2000-01-01 15:15>
+        yield 'date range 2 before date range 1 without gap (same dates)' => [
             'date_range_1' => new DateTimeRange(
                 new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:15:00', new \DateTimeZone('UTC'))
@@ -204,8 +225,8 @@ class DateTimeRangeTest extends TestCase
             'intersects' => false,
         ];
 
-        // [14:45] [15:00] <20:00> <20:15>
-        yield 'date range 2 before date range 1 with gap' => [
+        // [2000-01-01 14:45] [2000-01-01 15:00] ... <2000-01-01 20:00> <2000-01-01 20:15>
+        yield 'date range 2 before date range 1 with gap (same dates)' => [
             'date_range_1' => new DateTimeRange(
                 new \DateTime('2000-01-01 20:00:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 20:15:00', new \DateTimeZone('UTC'))
@@ -216,5 +237,145 @@ class DateTimeRangeTest extends TestCase
             ),
             'intersects' => false,
         ];
+    }
+
+    public static function dataProviderForTestIntersectsDifferentDates(): iterable
+    {
+        // <time of date range 1>
+        // [time of date range 2]
+
+        // [2000-01-01 14:30] <2000-01-02 14:45> <2000-01-02 15:15> [2000-01-03 15:30]
+        yield 'date range 1 is fully inside date range 2 (different dates)' => [
+            'date_range_1' => new DateTimeRange(
+                new \DateTime('2000-01-02 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-02 15:15:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateTimeRange(
+                new \DateTime('2000-01-01 14:30:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-03 15:30:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => true,
+        ];
+
+        // <2000-01-01 14:30> [2000-01-02 14:45] [2000-01-02 15:15] <2000-01-03 15:30>
+        yield 'date range 2 is fully inside date range 1 (different dates)' => [
+            'date_range_1' => new DateTimeRange(
+                new \DateTime('2000-01-01 14:30:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-03 15:30:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateTimeRange(
+                new \DateTime('2000-01-02 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-02 15:15:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => true,
+        ];
+
+        // [2000-01-01 14:45] <2000-01-02 15:00> [2000-01-02 15:05] <2000-01-03 15:15>
+        yield 'end of date range 2 intersects with start of date range 1 (different dates)' => [
+            'date_range_1' => new DateTimeRange(
+                new \DateTime('2000-01-02 15:00:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-03 15:15:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateTimeRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-02 15:05:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => true,
+        ];
+
+        // <2000-01-01 14:45> [2000-01-02 15:00] <2000-01-02 15:05> [2000-01-03 15:15]
+        yield 'end of date range 1 intersects with start of date range 2 (different dates)' => [
+            'date_range_1' => new DateTimeRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-02 15:05:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateTimeRange(
+                new \DateTime('2000-01-02 15:00:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-03 15:15:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => true,
+        ];
+
+        // <2000-01-01 14:45> [2000-01-02 14:45] <2000-01-02 15:05> [2000-01-03 15:05]
+        yield 'date range 1 equals date range 2 (different dates)' => [
+            'date_range_1' => new DateTimeRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-02 15:05:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateTimeRange(
+                new \DateTime('2000-01-02 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-03 15:05:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => true,
+        ];
+
+        // <2000-01-01 14:45> <2000-01-01 15:00> [2000-01-02 15:00] [2000-01-02 15:15]
+        yield 'date range 1 before date range 2 without gap (different dates)' => [
+            'date_range_1' => new DateTimeRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateTimeRange(
+                new \DateTime('2000-01-02 15:00:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-02 15:15:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => false,
+        ];
+
+        // <2000-01-01 14:45> <2000-01-01 15:00> ... [2000-01-02 20:00] [2000-01-02 20:15]
+        yield 'date range 1 before date range 2 with gap (different dates)' => [
+            'date_range_1' => new DateTimeRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateTimeRange(
+                new \DateTime('2000-02-01 20:00:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-02-01 20:15:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => false,
+        ];
+
+        // [2000-01-01 14:45] [2000-01-01 15:00] <2000-01-02 15:00> <2000-01-02 15:15>
+        yield 'date range 2 before date range 1 without gap (different dates)' => [
+            'date_range_1' => new DateTimeRange(
+                new \DateTime('2000-01-02 15:00:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-02 15:15:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateTimeRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => false,
+        ];
+
+        // [2000-01-01 14:45] [2000-01-01 15:00] ... <2000-01-02 20:00> <2000-01-02 20:15>
+        yield 'date range 2 before date range 1 with gap (different dates)' => [
+            'date_range_1' => new DateTimeRange(
+                new \DateTime('2000-01-02 20:00:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-02 20:15:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateTimeRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => false,
+        ];
+    }
+
+    public function testIntersectsWithExceptionForDifferentTimezones(): void
+    {
+        $dateRange1 = new DateTimeRange(
+            new \DateTime('2000-01-01 19:00:00', new \DateTimeZone('UTC')),
+            new \DateTime('2000-01-01 21:00:00', new \DateTimeZone('UTC'))
+        );
+        $dateRange2 = new DateTimeRange(
+            new \DateTime('2000-01-01 21:00:00', new \DateTimeZone('Europe/Kiev')),
+            new \DateTime('2000-01-01 23:00:00', new \DateTimeZone('Europe/Kiev'))
+        );
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Timezones of datetime ranges are different');
+
+        $dateRange1->intersects($dateRange2);
     }
 }

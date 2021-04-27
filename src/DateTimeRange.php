@@ -21,8 +21,6 @@ use Fresh\DateTime\Exception\LogicException;
  */
 final class DateTimeRange implements DateTimeRangeInterface
 {
-    private const INTERNAL_DATETIME_FORMAT = 'Y-m-d H:i:s';
-
     /** @var \DateTimeImmutable */
     private $since;
 
@@ -39,6 +37,22 @@ final class DateTimeRange implements DateTimeRangeInterface
 
         $this->since = DateTimeCloner::cloneIntoDateTimeImmutable($since);
         $this->till = DateTimeCloner::cloneIntoDateTimeImmutable($till);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTimezone(): \DateTimeZone
+    {
+        return $this->since->getTimezone(); // Since and till timezones are equal
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTimezoneName(): string
+    {
+        return $this->since->getTimezone()->getName(); // Since and till timezones are equal
     }
 
     /**
@@ -76,7 +90,10 @@ final class DateTimeRange implements DateTimeRangeInterface
      */
     public function intersects(DateTimeRangeInterface $dateTimeRange): bool
     {
-        // @todo Process timezones
+        if ($this->getTimezoneName() !== $dateTimeRange->getTimezoneName()) {
+            throw new LogicException('Timezones of datetime ranges are different');
+        }
+
         $givenDateRangeSince = $dateTimeRange->getSince();
         $givenDateRangeTill = $dateTimeRange->getTill();
 

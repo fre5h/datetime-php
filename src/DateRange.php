@@ -72,27 +72,6 @@ final class DateRange implements DateRangeInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function intersects(DateRangeInterface $dateRange): bool
-    {
-        // @todo Finish this
-        $givenDateRangeSince = $dateRange->getSince();
-        $givenDateRangeTill = $dateRange->getTill();
-
-        switch (true) {
-            case $this->since === $givenDateRangeSince && $this->till === $givenDateRangeTill: // Current date range is equal to the given date range
-            case $givenDateRangeSince < $this->since && $this->till < $givenDateRangeTill: // Current date range is fully inside the given date range
-            case $this->since < $givenDateRangeSince && $givenDateRangeTill < $this->till: // Given date range is fully inside the current date range
-            case $givenDateRangeSince <= $this->since && $this->since < $givenDateRangeTill: // Current date range beginning is inside the given date range
-            case $givenDateRangeSince < $this->till && $this->till <= $givenDateRangeTill: // Current date range ending is inside the given date range
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    /**
      * @param \DateTimeInterface $since
      * @param \DateTimeInterface $till
      *

@@ -20,6 +20,16 @@ namespace Fresh\DateTime;
 interface DateTimeRangeInterface
 {
     /**
+     * @return \DateTimeZone
+     */
+    public function getTimezone(): \DateTimeZone;
+
+    /**
+     * @return string
+     */
+    public function getTimezoneName(): string;
+
+    /**
      * @return \DateTimeImmutable
      */
     public function getSince(): \DateTimeImmutable;
