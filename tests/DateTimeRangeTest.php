@@ -106,7 +106,7 @@ class DateTimeRangeTest extends TestCase
     /**
      * @param DateTimeRange $dateTimeRange1
      * @param DateTimeRange $dateTimeRange2
-     * @param bool      $intersects
+     * @param bool          $intersects
      *
      * @dataProvider dataProviderForTestIntersectsSameDates
      * @dataProvider dataProviderForTestIntersectsDifferentDates

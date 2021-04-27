@@ -76,9 +76,10 @@ $dateTimeZone3 = $dateTimeHelper->createDateTimeZoneUtc(); // Another method to 
 
 ### Immutable `DateRange` ValueObject
 
-You often need to manipulate with since/till dates, so-called date ranges.
+You often needed to manipulate with since/till dates, so-called date ranges.
 By its nature, date range is a `ValueObject`, it can be reused many times for different purposes.
-This library provides a `DateRange` immutable class, which is not able to be changed after its creation. 
+This library provides a `DateRange` immutable class, which is not able to be changed after its creation.
+`DateRange` operates only with dates and ignore time.
 
 ```php
 use Fresh\DateTime\DateRange;
@@ -92,18 +93,20 @@ $dateRange1->isEqual($dateRange2); // Returns FALSE, because date ranges have di
 
 ### Immutable `DateTimeRange` ValueObject
 
-You often need to manipulate with since/till datetimes, so-called datetime ranges.
-By its nature, datetime range is a `ValueObject`, it can be reused many times for different purposes.
-This library provides a `DateTimeRange` immutable class, which is not able to be changed after its creation.
+This library provides  also immutable class `DateTimeRange`, instead of `DateRange` it check date and time.
 
 ```php
 use Fresh\DateTime\DateTimeRange;
 
-$dateTimeRange1 = new DateTimeRange(new \DateTime('yesterday'), new \DateTime('tomorrow'));
-$dateTimeRange2 = new DateTimeRange(new \DateTime('yesterday'), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev')));
+$dateTimeRange1 = new DateTimeRange(new \DateTime('2000-01-01 19:00:00'), new \DateTime('2000-01-01 21:00:00'));
+$dateTimeRange2 = new DateTimeRange(new \DateTime('2000-01-01 19:00:00'), new \DateTime('2000-01-01 21:00:00', new \DateTimeZone('Europe/Kiev')));
+$dateTimeRange3 = new DateTimeRange(new \DateTime('2000-01-01 20:00:00'), new \DateTime('2000-01-01 22:00:00'));
 
 // There is also the `isEqual` method to compare two DateTimeRange objects.
 $dateTimeRange1->isEqual($dateTimeRange2); // Returns FALSE, because datetime ranges have different timezones
+
+// There is also the `intersects` method to check if datetime range intersected each other.
+$dateTimeRange1->intersects($dateTimeRange3); // Returns TRUE, because datetime ranges are intersected
 ```
 
 ### Getting array of objects/strings of all dates in date range
