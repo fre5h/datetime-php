@@ -76,6 +76,7 @@ final class DateTimeRange implements DateTimeRangeInterface
      */
     public function intersects(DateTimeRangeInterface $dateTimeRange): bool
     {
+        // @todo Process timezones
         $givenDateRangeSince = $dateTimeRange->getSince();
         $givenDateRangeTill = $dateTimeRange->getTill();
 
