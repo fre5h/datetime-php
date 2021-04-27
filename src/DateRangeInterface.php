@@ -35,4 +35,11 @@ interface DateRangeInterface
      * @return bool
      */
     public function isEqual(self $dateRange): bool;
+
+    /**
+     * @param DateRangeInterface $dateRange
+     *
+     * @return bool
+     */
+    public function intersects(self $dateRange): bool;
 }
