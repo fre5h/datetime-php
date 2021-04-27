@@ -101,7 +101,7 @@ class DateRangeTest extends TestCase
         // [time of date range 2]
 
         // [14:30] <14:45> <15:15> [15:30]
-        yield 'date range 2 is fully inside date range 1' => [
+        yield 'date range 1 is fully inside date range 2' => [
             'date_range_1' => new DateRange(
                 new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:15:00', new \DateTimeZone('UTC'))
@@ -114,7 +114,7 @@ class DateRangeTest extends TestCase
         ];
 
         // <14:30> [14:45] [15:15] <15:30>
-        yield 'date range 1 is fully inside date range 2' => [
+        yield 'date range 2 is fully inside date range 1' => [
             'date_range_1' => new DateRange(
                 new \DateTime('2000-01-01 14:30:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:30:00', new \DateTimeZone('UTC'))
@@ -152,8 +152,21 @@ class DateRangeTest extends TestCase
             'intersects' => true,
         ];
 
+        // <14:45> [14:45] <15:05> [15:05]
+        yield 'date range 1 equals date range 2' => [
+            'date_range_1' => new DateRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-01 15:05:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-01 15:05:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => true,
+        ];
+
         // <14:45> <15:00> [15:00] [15:15]
-        yield 'date range 1 before date range 2' => [
+        yield 'date range 1 before date range 2 without gap' => [
             'date_range_1' => new DateRange(
                 new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC'))
@@ -165,11 +178,37 @@ class DateRangeTest extends TestCase
             'intersects' => false,
         ];
 
+        // <14:45> <15:00> ... [20:00] [20:15]
+        yield 'date range 1 before date range 2 with gap' => [
+            'date_range_1' => new DateRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateRange(
+                new \DateTime('2000-01-01 20:00:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-01 20:15:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => false,
+        ];
+
         // [14:45] [15:00] <15:00> <15:15>
-        yield 'date range 2 before date range 1' => [
+        yield 'date range 2 before date range 1 without gap' => [
             'date_range_1' => new DateRange(
                 new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC')),
                 new \DateTime('2000-01-01 15:15:00', new \DateTimeZone('UTC'))
+            ),
+            'date_range_2' => new DateRange(
+                new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('UTC'))
+            ),
+            'intersects' => false,
+        ];
+
+        // [14:45] [15:00] <20:00> <20:15>
+        yield 'date range 2 before date range 1 with gap' => [
+            'date_range_1' => new DateRange(
+                new \DateTime('2000-01-01 20:00:00', new \DateTimeZone('UTC')),
+                new \DateTime('2000-01-01 20:15:00', new \DateTimeZone('UTC'))
             ),
             'date_range_2' => new DateRange(
                 new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),

@@ -76,15 +76,27 @@ final class DateRange implements DateRangeInterface
      */
     public function intersects(DateRangeInterface $dateRange): bool
     {
-        $dateRangeSince = $dateRange->getSince();
-        $dateRangeTill = $dateRange->getTill();
+        $givenDateRangeSince = $dateRange->getSince();
+        $givenDateRangeTill = $dateRange->getTill();
 
-        $currentRangeFullyInsideGiven = $this->since >= $dateRangeSince && $this->till <= $dateRangeTill;
-        $currentRangeStartInsideGiven = $this->since >= $dateRangeSince && $this->since < $dateRangeTill;
-        $currentRangeEndInsideSGiven = $this->till > $dateRangeSince && $this->till <= $dateRangeTill;
-        $givenRangeFullyInsideCurrent = $this->since < $dateRangeSince && $this->till > $dateRangeTill;
+        $result = false;
 
-        return $currentRangeFullyInsideGiven || $currentRangeStartInsideGiven || $currentRangeEndInsideSGiven || $givenRangeFullyInsideCurrent;
+        // Current date range equal to given date range
+        $result |= $this->since === $givenDateRangeSince && $this->till === $givenDateRangeTill;
+
+        // Current date range fully inside given date range
+        $result |= $givenDateRangeSince < $this->since && $this->till < $givenDateRangeTill;
+
+        // Given date range fully inside current date range
+        $result |= $this->since < $givenDateRangeSince && $givenDateRangeTill < $this->till;
+
+        // Current date range beginning is inside given date range
+        $result |= $givenDateRangeSince <= $this->since && $this->since < $givenDateRangeTill;
+
+        // Current date range end is inside given date range
+        $result |= $givenDateRangeSince < $this->till && $this->till <= $givenDateRangeTill;
+
+        return $result;
     }
 
     /**
