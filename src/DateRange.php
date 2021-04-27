@@ -79,24 +79,21 @@ final class DateRange implements DateRangeInterface
         $givenDateRangeSince = $dateRange->getSince();
         $givenDateRangeTill = $dateRange->getTill();
 
-        $result = false;
-
-        // Current date range equal to given date range
-        $result |= $this->since === $givenDateRangeSince && $this->till === $givenDateRangeTill;
-
-        // Current date range fully inside given date range
-        $result |= $givenDateRangeSince < $this->since && $this->till < $givenDateRangeTill;
-
-        // Given date range fully inside current date range
-        $result |= $this->since < $givenDateRangeSince && $givenDateRangeTill < $this->till;
-
-        // Current date range beginning is inside given date range
-        $result |= $givenDateRangeSince <= $this->since && $this->since < $givenDateRangeTill;
-
-        // Current date range end is inside given date range
-        $result |= $givenDateRangeSince < $this->till && $this->till <= $givenDateRangeTill;
-
-        return $result;
+        switch (true) {
+            // Current date range is equal to the given date range
+            case $this->since === $givenDateRangeSince && $this->till === $givenDateRangeTill:
+            // Current date range is fully inside the given date range
+            case $givenDateRangeSince < $this->since && $this->till < $givenDateRangeTill:
+            // Given date range is fully inside the current date range
+            case $this->since < $givenDateRangeSince && $givenDateRangeTill < $this->till;
+            // Current date range beginning is inside the given date range
+            case $givenDateRangeSince <= $this->since && $this->since < $givenDateRangeTill;
+            // Current date range ending is inside the given date range
+            case $givenDateRangeSince < $this->till && $this->till <= $givenDateRangeTill;
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**
