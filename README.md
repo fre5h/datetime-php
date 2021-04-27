@@ -74,7 +74,7 @@ $dateTimeZone2 = $dateTimeHelper->createDateTimeZone('Europe/Kiev'); // Or with 
 $dateTimeZone3 = $dateTimeHelper->createDateTimeZoneUtc(); // Another method to get UTC timezone
 ```
 
-### Immutable ValueObject `DateRange`
+### Immutable `DateRange` ValueObject
 
 You often need to manipulate with since/till dates, so-called date ranges.
 By its nature, date range is a `ValueObject`, it can be reused many times for different purposes.
@@ -88,6 +88,22 @@ $dateRange2 = new DateRange(new \DateTime('yesterday'), new \DateTime('tomorrow'
 
 // There is also the `isEqual` method to compare two DateRange objects.
 $dateRange1->isEqual($dateRange2); // Returns FALSE, because date ranges have different timezones
+```
+
+### Immutable `DateTimeRange` ValueObject
+
+You often need to manipulate with since/till datetimes, so-called datetime ranges.
+By its nature, datetime range is a `ValueObject`, it can be reused many times for different purposes.
+This library provides a `DateTimeRange` immutable class, which is not able to be changed after its creation.
+
+```php
+use Fresh\DateTime\DateTimeRange;
+
+$dateTimeRange1 = new DateTimeRange(new \DateTime('yesterday'), new \DateTime('tomorrow'));
+$dateTimeRange2 = new DateTimeRange(new \DateTime('yesterday'), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev')));
+
+// There is also the `isEqual` method to compare two DateTimeRange objects.
+$dateTimeRange1->isEqual($dateTimeRange2); // Returns FALSE, because datetime ranges have different timezones
 ```
 
 ### Getting array of objects/strings of all dates in date range

@@ -15,13 +15,13 @@ namespace Fresh\DateTime;
 use Fresh\DateTime\Exception\LogicException;
 
 /**
- * DateRange.
+ * DateTimeRange.
  *
  * @author Artem Henvald <genvaldartem@gmail.com>
  */
-final class DateRange implements DateRangeInterface
+final class DateTimeRange implements DateTimeRangeInterface
 {
-    private const INTERNAL_DATE_FORMAT = 'Y-m-d';
+    private const INTERNAL_DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /** @var \DateTimeImmutable */
     private $since;
@@ -60,13 +60,13 @@ final class DateRange implements DateRangeInterface
     /**
      * {@inheritdoc}
      */
-    public function isEqual(DateRangeInterface $dateRange): bool
+    public function isEqual(DateTimeRangeInterface $dateTimeRange): bool
     {
-        $dateRangeSince = $dateRange->getSince();
-        $dateRangeTill = $dateRange->getTill();
+        $dateRangeSince = $dateTimeRange->getSince();
+        $dateRangeTill = $dateTimeRange->getTill();
 
-        return $this->since->format(self::INTERNAL_DATE_FORMAT) === $dateRangeSince->format(self::INTERNAL_DATE_FORMAT)
-               && $this->till->format(self::INTERNAL_DATE_FORMAT) === $dateRangeTill->format(self::INTERNAL_DATE_FORMAT)
+        return $this->since->getTimestamp() === $dateRangeSince->getTimestamp()
+               && $this->till->getTimestamp() === $dateRangeTill->getTimestamp()
                && $this->since->getTimezone()->getName() === $dateRangeSince->getTimezone()->getName()
                && $this->till->getTimezone()->getName() === $dateRangeTill->getTimezone()->getName();
     }
@@ -74,11 +74,10 @@ final class DateRange implements DateRangeInterface
     /**
      * {@inheritdoc}
      */
-    public function intersects(DateRangeInterface $dateRange): bool
+    public function intersects(DateTimeRangeInterface $dateTimeRange): bool
     {
-        // @todo Finish this
-        $givenDateRangeSince = $dateRange->getSince();
-        $givenDateRangeTill = $dateRange->getTill();
+        $givenDateRangeSince = $dateTimeRange->getSince();
+        $givenDateRangeTill = $dateTimeRange->getTill();
 
         switch (true) {
             case $this->since === $givenDateRangeSince && $this->till === $givenDateRangeTill: // Current date range is equal to the given date range
@@ -101,7 +100,7 @@ final class DateRange implements DateRangeInterface
     private function assertSameTimezones(\DateTimeInterface $since, \DateTimeInterface $till): void
     {
         if ($since->getTimezone()->getName() !== $till->getTimezone()->getName()) {
-            throw new LogicException('Dates have different timezones');
+            throw new LogicException('Datetimes have different timezones');
         }
     }
 }
