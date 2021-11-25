@@ -23,11 +23,9 @@ final class DateRange implements DateRangeInterface
 {
     private const INTERNAL_DATE_FORMAT = 'Y-m-d';
 
-    /** @var \DateTimeImmutable */
-    private $since;
+    private \DateTimeImmutable $since;
 
-    /** @var \DateTimeImmutable */
-    private $till;
+    private \DateTimeImmutable$till;
 
     /**
      * @param \DateTimeInterface $since

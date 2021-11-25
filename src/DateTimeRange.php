@@ -21,11 +21,9 @@ use Fresh\DateTime\Exception\LogicException;
  */
 final class DateTimeRange implements DateTimeRangeInterface
 {
-    /** @var \DateTimeImmutable */
-    private $since;
+    private \DateTimeImmutable $since;
 
-    /** @var \DateTimeImmutable */
-    private $till;
+    private \DateTimeImmutable $till;
 
     /**
      * @param \DateTimeInterface $since
