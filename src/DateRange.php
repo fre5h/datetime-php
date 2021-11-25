@@ -23,9 +23,9 @@ final class DateRange implements DateRangeInterface
 {
     private const INTERNAL_DATE_FORMAT = 'Y-m-d';
 
-    private \DateTimeImmutable $since;
+    private readonly \DateTimeImmutable $since;
 
-    private \DateTimeImmutable$till;
+    private readonly \DateTimeImmutable$till;
 
     /**
      * @param \DateTimeInterface $since
@@ -75,7 +75,7 @@ final class DateRange implements DateRangeInterface
      *
      * @throws LogicException
      */
-    private function assertSameTimezones(\DateTimeInterface $since, \DateTimeInterface $till): void
+    private function assertSameTimezones(\DateTimeInterface $since, \DateTimeInterface $till): never
     {
         if ($since->getTimezone()->getName() !== $till->getTimezone()->getName()) {
             throw new LogicException('Dates have different timezones');

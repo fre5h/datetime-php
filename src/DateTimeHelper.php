@@ -21,7 +21,7 @@ class DateTimeHelper implements DateTimeHelperInterface
 {
     private const INTERNAL_DATE_FORMAT = 'Y-m-d';
 
-    /** @var mixed[] */
+    /** @var array<int, \DateTimeInterface> */
     private $datesCache = [];
 
     private ?\DateTimeZone $timeZoneUtc = null;
@@ -103,6 +103,7 @@ class DateTimeHelper implements DateTimeHelperInterface
             $datesAsObjects = [];
             $period = new \DatePeriod($since, new \DateInterval('P1D'), $till);
             foreach ($period as $date) {
+                /** @var \DateTimeInterface $date */
                 $datesAsObjects[] = $date;
             }
 
