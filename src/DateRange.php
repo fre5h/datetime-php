@@ -23,11 +23,15 @@ final class DateRange implements DateRangeInterface
 {
     private const INTERNAL_DATE_FORMAT = 'Y-m-d';
 
+    private readonly \DateTimeImmutable $since;
+
+    private readonly \DateTimeImmutable $till
+
     /**
      * @param \DateTimeInterface $since
      * @param \DateTimeInterface $till
      */
-    public function __construct(private readonly \DateTimeInterface $since, private readonly \DateTimeInterface $till)
+    public function __construct(\DateTimeInterface $since, \DateTimeInterface $till)
     {
         $this->assertSameTimezones($since, $till);
 
