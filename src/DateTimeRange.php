@@ -109,7 +109,7 @@ final class DateTimeRange implements DateTimeRangeInterface
      *
      * @throws LogicException
      */
-    private function assertSameTimezones(\DateTimeInterface $since, \DateTimeInterface $till): never
+    private function assertSameTimezones(\DateTimeInterface $since, \DateTimeInterface $till): void
     {
         if ($since->getTimezone()->getName() !== $till->getTimezone()->getName()) {
             throw new LogicException('Datetimes have different timezones');
