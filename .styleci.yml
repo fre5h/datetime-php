@@ -1,5 +1,7 @@
 preset: recommended
 
+version: 8.1
+
 enabled:
   - combine_consecutive_unsets
   - linebreak_after_opening_tag
