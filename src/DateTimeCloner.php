@@ -35,7 +35,7 @@ class DateTimeCloner
         $date = \DateTime::createFromFormat(
             self::DATE_FORMAT_FOR_CLONE,
             $originalDate->format(self::DATE_FORMAT_FOR_CLONE),
-            $originalDate->getTimezone()
+            $originalDate->getTimezone() ?? null
         );
 
         if (!$date instanceof \DateTime) {
@@ -57,7 +57,7 @@ class DateTimeCloner
         $date = \DateTimeImmutable::createFromFormat(
             self::DATE_FORMAT_FOR_CLONE,
             $originalDate->format(self::DATE_FORMAT_FOR_CLONE),
-            $originalDate->getTimezone()
+            $originalDate->getTimezone() ?? null
         );
 
         if (!$date instanceof \DateTimeImmutable) {
