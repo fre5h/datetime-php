@@ -22,7 +22,7 @@ class DateTimeHelper implements DateTimeHelperInterface
     private const INTERNAL_DATE_FORMAT = 'Y-m-d';
 
     /** @var array<int, \DateTimeInterface> */
-    private $datesCache = [];
+    private array $datesCache = [];
 
     private ?\DateTimeZone $timeZoneUtc = null;
 
