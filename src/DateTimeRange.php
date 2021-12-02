@@ -21,15 +21,11 @@ use Fresh\DateTime\Exception\LogicException;
  */
 final class DateTimeRange implements DateTimeRangeInterface
 {
-    private readonly \DateTimeImmutable $since;
-
-    private readonly \DateTimeImmutable $till;
-
     /**
      * @param \DateTimeInterface $since
      * @param \DateTimeInterface $till
      */
-    public function __construct(\DateTimeInterface $since, \DateTimeInterface $till)
+    public function __construct(private readonly \DateTimeInterface $since, private readonly \DateTimeInterface $till)
     {
         $this->assertSameTimezones($since, $till);
 
@@ -113,7 +109,7 @@ final class DateTimeRange implements DateTimeRangeInterface
      *
      * @throws LogicException
      */
-    private function assertSameTimezones(\DateTimeInterface $since, \DateTimeInterface $till): void
+    private function assertSameTimezones(\DateTimeInterface $since, \DateTimeInterface $till): never
     {
         if ($since->getTimezone()->getName() !== $till->getTimezone()->getName()) {
             throw new LogicException('Datetimes have different timezones');
