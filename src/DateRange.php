@@ -25,7 +25,7 @@ final class DateRange implements DateRangeInterface
 
     private readonly \DateTimeImmutable $since;
 
-    private readonly \DateTimeImmutable $till
+    private readonly \DateTimeImmutable $till;
 
     /**
      * @param \DateTimeInterface $since
