@@ -23,7 +23,7 @@ final class DateTimeRange implements DateTimeRangeInterface
 {
     private readonly \DateTimeImmutable $since;
 
-    private readonly \DateTimeImmutable $till
+    private readonly \DateTimeImmutable $till;
 
     /**
      * @param \DateTimeInterface $since
