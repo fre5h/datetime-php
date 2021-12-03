@@ -28,8 +28,7 @@ class DateTimeHelperTest extends TestCase
     /** @var DateRangeInterface|MockObject */
     private $dateRange;
 
-    /** @var DateTimeHelper */
-    private $dateTimeHelper;
+    private DateTimeHelper $dateTimeHelper;
 
     protected function setUp(): void
     {

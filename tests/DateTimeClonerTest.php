@@ -44,7 +44,7 @@ class DateTimeClonerTest extends TestCase
         $datetime
             ->expects(self::once())
             ->method('getTimezone')
-            ->willReturn(null)
+            ->willReturn(false)
         ;
 
         $this->expectException(UnexpectedValueException::class);
@@ -74,7 +74,7 @@ class DateTimeClonerTest extends TestCase
         $datetime
             ->expects(self::once())
             ->method('getTimezone')
-            ->willReturn(null)
+            ->willReturn(false)
         ;
 
         $this->expectException(UnexpectedValueException::class);
