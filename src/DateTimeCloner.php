@@ -32,7 +32,7 @@ class DateTimeCloner
      */
     public static function cloneIntoDateTime(\DateTimeInterface $originalDate): \DateTime
     {
-        /** @var $timezone \DateTimeZone|false */
+        /** @var \DateTimeZone|false $timezone */
         $timezone = $originalDate->getTimezone();
         $date = \DateTime::createFromFormat(
             self::DATE_FORMAT_FOR_CLONE,
@@ -56,7 +56,7 @@ class DateTimeCloner
      */
     public static function cloneIntoDateTimeImmutable(\DateTimeInterface $originalDate): \DateTimeImmutable
     {
-        /** @var $timezone \DateTimeZone|false */
+        /** @var \DateTimeZone|false $timezone */
         $timezone = $originalDate->getTimezone();
         $date = \DateTimeImmutable::createFromFormat(
             self::DATE_FORMAT_FOR_CLONE,
