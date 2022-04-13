@@ -1,6 +1,6 @@
 # DateTime
 
-🕒 📅 🐘 PHP library that provides additional functions for processing dates & times.
+PHP library that provides additional functions for processing dates & times. 🐘 🕒 📅
 
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/fre5h/datetime-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/fre5h/datetime-php/)
 [![Build Status](https://img.shields.io/github/workflow/status/fre5h/datetime-php/CI/main?style=flat-square)](https://github.com/fre5h/datetime-php/actions?query=workflow%3ACI+branch%3Amain+)
