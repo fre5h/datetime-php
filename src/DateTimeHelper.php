@@ -12,12 +12,14 @@ declare(strict_types=1);
 
 namespace Fresh\DateTime;
 
+use Psr\Clock\ClockInterface;
+
 /**
  * DateTimeHelper.
  *
  * @author Artem Henvald <genvaldartem@gmail.com>
  */
-class DateTimeHelper implements DateTimeHelperInterface
+class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
 {
     private const INTERNAL_DATE_FORMAT = 'Y-m-d';
 
@@ -25,6 +27,14 @@ class DateTimeHelper implements DateTimeHelperInterface
     private array $datesCache = [];
 
     private ?\DateTimeZone $timeZoneUtc = null;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function now(): \DateTimeImmutable
+    {
+        return $this->getCurrentDatetimeImmutableUtc();
+    }
 
     /**
      * {@inheritdoc}

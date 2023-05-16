@@ -13,7 +13,7 @@ PHP library that provides additional functions for processing dates & times. ðŸ
 
 ## Requirements
 
-* PHP 8.1
+* PHP 8.2
 
 ## Installation ðŸŒ±
 
@@ -46,6 +46,16 @@ $now3 = $dateTimeHelper->getCurrentDatetimeUtc(); // Always in UTC
 $now4 = $dateTimeHelper->getCurrentDatetimeImmutable();
 $now5 = $dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
 $now6 = $dateTimeHelper->getCurrentDatetimeImmutableUtc(); // Always in UTC
+```
+
+Compatible with [PSR-20: Clock](https://www.php-fig.org/psr/psr-20/).
+
+```php
+use Fresh\DateTime\DateTimeHelper;
+
+$dateTimeHelper = new DateTimeHelper();
+
+$now = $dateTimeHelper->now(); // \DateTimeImmutable in UTC
 ```
 
 ### Method for getting current timestamp

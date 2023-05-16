@@ -25,9 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DateTimeHelperTest extends TestCase
 {
-    /** @var DateRangeInterface|MockObject */
-    private $dateRange;
-
+    private DateRangeInterface|MockObject $dateRange;
     private DateTimeHelper $dateTimeHelper;
 
     protected function setUp(): void
@@ -103,6 +101,13 @@ class DateTimeHelperTest extends TestCase
         $now = $this->dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kiev'));
         self::assertInstanceOf(\DateTimeImmutable::class, $now);
         self::assertSame('Europe/Kiev', $now->getTimezone()->getName());
+    }
+
+    public function testNow(): void
+    {
+        $now = $this->dateTimeHelper->now();
+        self::assertInstanceOf(\DateTimeImmutable::class, $now);
+        self::assertSame('UTC', $now->getTimezone()->getName());
     }
 
     public function testGetCurrentDatetimeImmutableUtc(): void
