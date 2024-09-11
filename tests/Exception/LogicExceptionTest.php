@@ -14,6 +14,7 @@ namespace Fresh\DateTime\Tests\Exception;
 
 use Fresh\DateTime\Exception\ExceptionInterface;
 use Fresh\DateTime\Exception\LogicException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,10 +24,11 @@ use PHPUnit\Framework\TestCase;
  */
 class LogicExceptionTest extends TestCase
 {
-    public function testConstructor(): void
+    #[Test]
+    public function constructor(): void
     {
         $logicException = new LogicException();
-        self::assertInstanceOf(\LogicException::class, $logicException);
-        self::assertInstanceOf(ExceptionInterface::class, $logicException);
+        $this->assertInstanceOf(\LogicException::class, $logicException);
+        $this->assertInstanceOf(ExceptionInterface::class, $logicException);
     }
 }

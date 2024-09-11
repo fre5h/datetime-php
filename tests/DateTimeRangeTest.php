@@ -15,6 +15,8 @@ namespace Fresh\DateTime\Tests;
 use Fresh\DateTime\DateTimeRange;
 use Fresh\DateTime\DateTimeRangeInterface;
 use Fresh\DateTime\Exception\LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,21 +26,23 @@ use PHPUnit\Framework\TestCase;
  */
 class DateTimeRangeTest extends TestCase
 {
-    public function testConstructor(): void
+    #[Test]
+    public function constructor(): void
     {
         $since = new \DateTime('now');
         $till = new \DateTime('tomorrow');
 
         $dateTimeRange = new DateTimeRange($since, $till);
 
-        self::assertInstanceOf(DateTimeRangeInterface::class, $dateTimeRange);
-        self::assertInstanceOf(\DateTimeImmutable::class, $dateTimeRange->getSince());
-        self::assertInstanceOf(\DateTimeImmutable::class, $dateTimeRange->getTill());
-        self::assertSame($since->format('Y-m-d H:i:s'), $dateTimeRange->getSince()->format('Y-m-d H:i:s'));
-        self::assertSame($till->format('Y-m-d H:i:s'), $dateTimeRange->getTill()->format('Y-m-d H:i:s'));
+        $this->assertInstanceOf(DateTimeRangeInterface::class, $dateTimeRange);
+        $this->assertInstanceOf(\DateTimeImmutable::class, $dateTimeRange->getSince());
+        $this->assertInstanceOf(\DateTimeImmutable::class, $dateTimeRange->getTill());
+        $this->assertSame($since->format('Y-m-d H:i:s'), $dateTimeRange->getSince()->format('Y-m-d H:i:s'));
+        $this->assertSame($till->format('Y-m-d H:i:s'), $dateTimeRange->getTill()->format('Y-m-d H:i:s'));
     }
 
-    public function testConstructorWithExceptionForDifferentTimezones(): void
+    #[Test]
+    public function constructorWithExceptionForDifferentTimezones(): void
     {
         $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
         $till = new \DateTime('now', new \DateTimeZone('Europe/Warsaw'));
@@ -49,27 +53,30 @@ class DateTimeRangeTest extends TestCase
         new DateTimeRange($since, $till);
     }
 
-    public function testGetTimezone(): void
+    #[Test]
+    public function getTimezone(): void
     {
         $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
         $till = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
 
         $dateTimeRange = new DateTimeRange($since, $till);
 
-        self::assertEquals('Europe/Kiev', $dateTimeRange->getTimezone()->getName());
+        $this->assertEquals('Europe/Kiev', $dateTimeRange->getTimezone()->getName());
     }
 
-    public function testGetTimezoneName(): void
+    #[Test]
+    public function getTimezoneName(): void
     {
         $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
         $till = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
 
         $dateTimeRange = new DateTimeRange($since, $till);
 
-        self::assertEquals('Europe/Kiev', $dateTimeRange->getTimezoneName());
+        $this->assertEquals('Europe/Kiev', $dateTimeRange->getTimezoneName());
     }
 
-    public function testIsEqual(): void
+    #[Test]
+    public function isEqual(): void
     {
         $dateTimeRange1 = new DateTimeRange(
             new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('UTC')),
@@ -96,24 +103,19 @@ class DateTimeRangeTest extends TestCase
             new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('Europe/Kiev'))
         );
 
-        self::assertTrue($dateTimeRange1->isEqual($dateTimeRange2), 'Since/till timezones are same, time is same');
-        self::assertFalse($dateTimeRange1->isEqual($dateTimeRange3), 'Since/till timezones are same, since time is different');
-        self::assertFalse($dateTimeRange1->isEqual($dateTimeRange4), 'Since/till timezones are same, till time is different');
-        self::assertFalse($dateTimeRange1->isEqual($dateTimeRange5), 'Since/till timezones are same, since/till time is different');
-        self::assertFalse($dateTimeRange1->isEqual($dateTimeRange6), 'Since/till timezones are different');
+        $this->assertTrue($dateTimeRange1->isEqual($dateTimeRange2), 'Since/till timezones are same, time is same');
+        $this->assertFalse($dateTimeRange1->isEqual($dateTimeRange3), 'Since/till timezones are same, since time is different');
+        $this->assertFalse($dateTimeRange1->isEqual($dateTimeRange4), 'Since/till timezones are same, till time is different');
+        $this->assertFalse($dateTimeRange1->isEqual($dateTimeRange5), 'Since/till timezones are same, since/till time is different');
+        $this->assertFalse($dateTimeRange1->isEqual($dateTimeRange6), 'Since/till timezones are different');
     }
 
-    /**
-     * @param DateTimeRange $dateTimeRange1
-     * @param DateTimeRange $dateTimeRange2
-     * @param bool          $intersects
-     *
-     * @dataProvider dataProviderForTestIntersectsSameDates
-     * @dataProvider dataProviderForTestIntersectsDifferentDates
-     */
-    public function testIntersects(DateTimeRange $dateTimeRange1, DateTimeRange $dateTimeRange2, bool $intersects): void
+    #[Test]
+    #[DataProvider('dataProviderForTestIntersectsSameDates')]
+    #[DataProvider('dataProviderForTestIntersectsDifferentDates')]
+    public function intersects(DateTimeRange $dateTimeRange1, DateTimeRange $dateTimeRange2, bool $intersects): void
     {
-        self::assertSame($intersects, $dateTimeRange1->intersects($dateTimeRange2));
+        $this->assertSame($intersects, $dateTimeRange1->intersects($dateTimeRange2));
     }
 
     public static function dataProviderForTestIntersectsSameDates(): iterable
@@ -362,7 +364,8 @@ class DateTimeRangeTest extends TestCase
         ];
     }
 
-    public function testIntersectsWithExceptionForDifferentTimezones(): void
+    #[Test]
+    public function intersectsWithExceptionForDifferentTimezones(): void
     {
         $dateRange1 = new DateTimeRange(
             new \DateTime('2000-01-01 19:00:00', new \DateTimeZone('UTC')),

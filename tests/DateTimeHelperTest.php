@@ -15,8 +15,9 @@ namespace Fresh\DateTime\Tests;
 use Fresh\DateTime\DateRangeInterface;
 use Fresh\DateTime\DateTimeHelper;
 use Fresh\DateTime\DateTimeHelperInterface;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,7 +27,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DateTimeHelperTest extends TestCase
 {
-    private DateRangeInterface|MockObject $dateRange;
+    private DateRangeInterface&MockObject $dateRange;
     private DateTimeHelper $dateTimeHelper;
 
     protected function setUp(): void
@@ -46,96 +47,90 @@ class DateTimeHelperTest extends TestCase
     #[Test]
     public function constructor(): void
     {
-        self::assertInstanceOf(DateTimeHelperInterface::class, $this->dateTimeHelper);
+        $this->assertInstanceOf(DateTimeHelperInterface::class, $this->dateTimeHelper);
     }
 
     #[Test]
     public function createDateTimeZone(): void
     {
         $timezone = $this->dateTimeHelper->createDateTimeZone();
-        self::assertInstanceOf(\DateTimeZone::class, $timezone);
-        self::assertSame('UTC', $timezone->getName());
+        $this->assertInstanceOf(\DateTimeZone::class, $timezone);
+        $this->assertSame('UTC', $timezone->getName());
 
         $timezone = $this->dateTimeHelper->createDateTimeZone('Europe/Kiev');
-        self::assertInstanceOf(\DateTimeZone::class, $timezone);
+        $this->assertInstanceOf(\DateTimeZone::class, $timezone);
     }
 
     #[Test]
     public function createDateTimeZoneUtc(): void
     {
         $timezone1 = $this->dateTimeHelper->createDateTimeZoneUtc();
-        self::assertInstanceOf(\DateTimeZone::class, $timezone1);
-        self::assertSame('UTC', $timezone1->getName());
+        $this->assertInstanceOf(\DateTimeZone::class, $timezone1);
+        $this->assertSame('UTC', $timezone1->getName());
 
         // Second call hits cache
         $timezone2 = $this->dateTimeHelper->createDateTimeZoneUtc();
-        self::assertInstanceOf(\DateTimeZone::class, $timezone2);
-        self::assertSame('UTC', $timezone2->getName());
-        self::assertEquals($timezone1, $timezone2);
+        $this->assertInstanceOf(\DateTimeZone::class, $timezone2);
+        $this->assertSame('UTC', $timezone2->getName());
+        $this->assertEquals($timezone1, $timezone2);
     }
 
     #[Test]
     public function getCurrentTimestamp(): void
     {
         $timestamp = $this->dateTimeHelper->getCurrentTimestamp();
-        self::assertIsInt($timestamp);
+        $this->assertIsInt($timestamp);
     }
 
     #[Test]
     public function getCurrentDatetime(): void
     {
         $now = $this->dateTimeHelper->getCurrentDatetime();
-        self::assertInstanceOf(\DateTime::class, $now);
+        $this->assertInstanceOf(\DateTime::class, $now);
 
         $now = $this->dateTimeHelper->getCurrentDatetime(new \DateTimeZone('Europe/Kiev'));
-        self::assertInstanceOf(\DateTime::class, $now);
-        self::assertSame('Europe/Kiev', $now->getTimezone()->getName());
+        $this->assertInstanceOf(\DateTime::class, $now);
+        $this->assertSame('Europe/Kiev', $now->getTimezone()->getName());
     }
 
     #[Test]
     public function getCurrentDatetimeUtc(): void
     {
         $now = $this->dateTimeHelper->getCurrentDatetimeUtc();
-        self::assertInstanceOf(\DateTime::class, $now);
-        self::assertSame('UTC', $now->getTimezone()->getName());
+        $this->assertInstanceOf(\DateTime::class, $now);
+        $this->assertSame('UTC', $now->getTimezone()->getName());
     }
 
     #[Test]
     public function getCurrentDatetimeImmutable(): void
     {
         $now = $this->dateTimeHelper->getCurrentDatetimeImmutable();
-        self::assertInstanceOf(\DateTimeImmutable::class, $now);
+        $this->assertInstanceOf(\DateTimeImmutable::class, $now);
 
         $now = $this->dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kiev'));
-        self::assertInstanceOf(\DateTimeImmutable::class, $now);
-        self::assertSame('Europe/Kiev', $now->getTimezone()->getName());
+        $this->assertInstanceOf(\DateTimeImmutable::class, $now);
+        $this->assertSame('Europe/Kiev', $now->getTimezone()->getName());
     }
 
     #[Test]
     public function now(): void
     {
         $now = $this->dateTimeHelper->now();
-        self::assertInstanceOf(\DateTimeImmutable::class, $now);
-        self::assertSame('UTC', $now->getTimezone()->getName());
+        $this->assertInstanceOf(\DateTimeImmutable::class, $now);
+        $this->assertSame('UTC', $now->getTimezone()->getName());
     }
 
     #[Test]
     public function getCurrentDatetimeImmutableUtc(): void
     {
         $now = $this->dateTimeHelper->getCurrentDatetimeImmutableUtc();
-        self::assertInstanceOf(\DateTimeImmutable::class, $now);
-        self::assertSame('UTC', $now->getTimezone()->getName());
+        $this->assertInstanceOf(\DateTimeImmutable::class, $now);
+        $this->assertSame('UTC', $now->getTimezone()->getName());
     }
 
-    /**
-     * @param string $timeZoneName
-     * @param string $since
-     * @param string $till
-     * @param array  $expectedDates
-     *
-     * @dataProvider dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings
-     */
-    public function testGetDatesFromDateRangeAsArrayOfObjects(string $timeZoneName, string $since, string $till, array $expectedDates): void
+    #[Test]
+    #[DataProvider('dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings')]
+    public function getDatesFromDateRangeAsArrayOfObjects(string $timeZoneName, string $since, string $till, array $expectedDates): void
     {
         $this->dateRange
             ->method('getSince')
@@ -154,18 +149,12 @@ class DateTimeHelperTest extends TestCase
             $datesAsObjects
         );
 
-        self::assertSame($expectedDates, $dates);
+        $this->assertSame($expectedDates, $dates);
     }
 
-    /**
-     * @param string $timeZoneName
-     * @param string $since
-     * @param string $till
-     * @param array  $expectedDates
-     *
-     * @dataProvider dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings
-     */
-    public function testGetDatesFromDateRangeAsArrayOfStrings(string $timeZoneName, string $since, string $till, array $expectedDates): void
+    #[Test]
+    #[DataProvider('dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings')]
+    public function getDatesFromDateRangeAsArrayOfStrings(string $timeZoneName, string $since, string $till, array $expectedDates): void
     {
         $this->dateRange
             ->method('getSince')
@@ -178,7 +167,7 @@ class DateTimeHelperTest extends TestCase
 
         $dates = $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfStrings($this->dateRange);
 
-        self::assertSame($expectedDates, $dates);
+        $this->assertSame($expectedDates, $dates);
     }
 
     public static function dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings(): \Generator
@@ -238,7 +227,7 @@ class DateTimeHelperTest extends TestCase
         $dates1 = $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfStrings($this->dateRange);
         $dates2 = $this->dateTimeHelper->getDatesFromDateRangeAsArrayOfStrings($this->dateRange);
 
-        self::assertSame($expectedDates, $dates1);
-        self::assertSame($expectedDates, $dates2);
+        $this->assertSame($expectedDates, $dates1);
+        $this->assertSame($expectedDates, $dates2);
     }
 }

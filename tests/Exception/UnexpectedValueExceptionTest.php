@@ -14,6 +14,7 @@ namespace Fresh\DateTime\Tests\Exception;
 
 use Fresh\DateTime\Exception\ExceptionInterface;
 use Fresh\DateTime\Exception\UnexpectedValueException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,10 +24,11 @@ use PHPUnit\Framework\TestCase;
  */
 class UnexpectedValueExceptionTest extends TestCase
 {
-    public function testConstructor(): void
+    #[Test]
+    public function constructor(): void
     {
         $unexpectedValueException = new UnexpectedValueException();
-        self::assertInstanceOf(\UnexpectedValueException::class, $unexpectedValueException);
-        self::assertInstanceOf(ExceptionInterface::class, $unexpectedValueException);
+        $this->assertInstanceOf(\UnexpectedValueException::class, $unexpectedValueException);
+        $this->assertInstanceOf(ExceptionInterface::class, $unexpectedValueException);
     }
 }
