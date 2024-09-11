@@ -21,7 +21,7 @@ use Fresh\DateTime\Exception\LogicException;
  */
 final class DateRange implements DateRangeInterface
 {
-    private const INTERNAL_DATE_FORMAT = 'Y-m-d';
+    private const string INTERNAL_DATE_FORMAT = 'Y-m-d';
 
     private readonly \DateTimeImmutable $since;
 
