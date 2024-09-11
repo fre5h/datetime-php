@@ -278,7 +278,7 @@ class DateTimeHelperTest extends TestCase
     public function createDateTimeImmutableFromFormatWithException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Could not create a \DateTime object from string "fake" from format "Y-m-d H:i:s".');
+        $this->expectExceptionMessage('Could not create a \DateTimeImmutable object from string "fake" from format "Y-m-d H:i:s".');
 
 
         $this->dateTimeHelper->createDateTimeImmutableFromFormat(dateTimeAsString: 'fake');
