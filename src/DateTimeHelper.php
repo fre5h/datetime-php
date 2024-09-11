@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Fresh\DateTime;
 
+use Fresh\DateTime\Exception\InvalidArgumentException;
 use Psr\Clock\ClockInterface;
 
 /**
@@ -22,6 +23,7 @@ use Psr\Clock\ClockInterface;
 class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
 {
     private const string INTERNAL_DATE_FORMAT = 'Y-m-d';
+    private const string INTERNAL_DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /** @var array<string, \DateTimeInterface[]> */
     private array $datesCache = [];
@@ -136,6 +138,24 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
         }
 
         return $datesAsStrings;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createDateTimeFromFormat(string $dateTimeAsString, string $dateFormat = self::INTERNAL_DATETIME_FORMAT, ?\DateTimeZone $timeZone = null): \DateTime
+    {
+        if ($timeZone instanceof \DateTimeZone) {
+            $result = \DateTime::createFromFormat($dateFormat, $dateTimeAsString, $timeZone);
+        } else {
+            $result = \DateTime::createFromFormat($dateFormat, $dateTimeAsString, $this->createDateTimeZoneUtc());
+        }
+
+        if (!$result instanceof \DateTime) {
+            throw new InvalidArgumentException(\sprintf('Could not create a \DateTime object from string "%s" from format "%s".', $dateTimeAsString, $dateFormat));
+        }
+
+        return $result;
     }
 
     /**

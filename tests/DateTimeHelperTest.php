@@ -15,6 +15,7 @@ namespace Fresh\DateTime\Tests;
 use Fresh\DateTime\DateRangeInterface;
 use Fresh\DateTime\DateTimeHelper;
 use Fresh\DateTime\DateTimeHelperInterface;
+use Fresh\DateTime\Exception\InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -229,5 +230,31 @@ class DateTimeHelperTest extends TestCase
 
         $this->assertSame($expectedDates, $dates1);
         $this->assertSame($expectedDates, $dates2);
+    }
+
+    #[Test]
+    public function createDateTimeFromFormatWithDefaultTimezone(): void
+    {
+        $dateTime = $this->dateTimeHelper->createDateTimeFromFormat(dateTimeAsString: '2000-01-01 00:00:00');
+        $this->assertInstanceOf(\DateTime::class, $dateTime);
+        $this->assertSame('UTC', $dateTime->getTimezone()->getName());
+    }
+
+    #[Test]
+    public function createDateTimeFromFormatWithCustomTimezone(): void
+    {
+        $dateTime = $this->dateTimeHelper->createDateTimeFromFormat(dateTimeAsString: '2000-01-01 00:00:00', timezone: new \DateTimeZone('Europe/Berlin'));
+        $this->assertInstanceOf(\DateTime::class, $dateTime);
+        $this->assertSame('Europe/Berlin', $dateTime->getTimezone()->getName());
+    }
+
+    #[Test]
+    public function createDateTimeFromFormatWithException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Could not create a \DateTime object from string "fake" from format "Y-m-d H:i:s".');
+
+
+        $dateTime = $this->dateTimeHelper->createDateTimeFromFormat(dateTimeAsString: 'fake');
     }
 }
