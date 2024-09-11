@@ -17,7 +17,7 @@
         "issues": "https://github.com/fre5h/datetime-php/issues"
     },
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "psr/clock": "^1.0"
     },
     "require-dev": {
