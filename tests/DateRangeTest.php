@@ -43,7 +43,7 @@ class DateRangeTest extends TestCase
     #[Test]
     public function constructorWithExceptionForDifferentTimezones(): void
     {
-        $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+        $since = new \DateTime('now', new \DateTimeZone('Europe/Kyiv'));
         $till = new \DateTime('now', new \DateTimeZone('Europe/Warsaw'));
 
         $this->expectException(LogicException::class);
@@ -76,8 +76,8 @@ class DateRangeTest extends TestCase
             new \DateTime('now', new \DateTimeZone('UTC'))
         );
         $dateRange6 = new DateRange(
-            new \DateTime('now', new \DateTimeZone('Europe/Kiev')),
-            new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev'))
+            new \DateTime('now', new \DateTimeZone('Europe/Kyiv')),
+            new \DateTime('tomorrow', new \DateTimeZone('Europe/Kyiv'))
         );
 
         $this->assertTrue($dateRange1->isEqual($dateRange2), 'Since/till timezones are same, time is same');

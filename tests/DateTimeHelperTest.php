@@ -58,7 +58,7 @@ class DateTimeHelperTest extends TestCase
         $this->assertInstanceOf(\DateTimeZone::class, $timezone);
         $this->assertSame('UTC', $timezone->getName());
 
-        $timezone = $this->dateTimeHelper->createDateTimeZone('Europe/Kiev');
+        $timezone = $this->dateTimeHelper->createDateTimeZone('Europe/Kyiv');
         $this->assertInstanceOf(\DateTimeZone::class, $timezone);
     }
 
@@ -89,9 +89,9 @@ class DateTimeHelperTest extends TestCase
         $now = $this->dateTimeHelper->getCurrentDatetime();
         $this->assertInstanceOf(\DateTime::class, $now);
 
-        $now = $this->dateTimeHelper->getCurrentDatetime(new \DateTimeZone('Europe/Kiev'));
+        $now = $this->dateTimeHelper->getCurrentDatetime(new \DateTimeZone('Europe/Kyiv'));
         $this->assertInstanceOf(\DateTime::class, $now);
-        $this->assertSame('Europe/Kiev', $now->getTimezone()->getName());
+        $this->assertSame('Europe/Kyiv', $now->getTimezone()->getName());
     }
 
     #[Test]
@@ -108,9 +108,9 @@ class DateTimeHelperTest extends TestCase
         $now = $this->dateTimeHelper->getCurrentDatetimeImmutable();
         $this->assertInstanceOf(\DateTimeImmutable::class, $now);
 
-        $now = $this->dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kiev'));
+        $now = $this->dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kyiv'));
         $this->assertInstanceOf(\DateTimeImmutable::class, $now);
-        $this->assertSame('Europe/Kiev', $now->getTimezone()->getName());
+        $this->assertSame('Europe/Kyiv', $now->getTimezone()->getName());
     }
 
     #[Test]

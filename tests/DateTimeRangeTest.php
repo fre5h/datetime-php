@@ -44,7 +44,7 @@ class DateTimeRangeTest extends TestCase
     #[Test]
     public function constructorWithExceptionForDifferentTimezones(): void
     {
-        $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+        $since = new \DateTime('now', new \DateTimeZone('Europe/Kyiv'));
         $till = new \DateTime('now', new \DateTimeZone('Europe/Warsaw'));
 
         $this->expectException(LogicException::class);
@@ -56,23 +56,23 @@ class DateTimeRangeTest extends TestCase
     #[Test]
     public function getTimezone(): void
     {
-        $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
-        $till = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+        $since = new \DateTime('now', new \DateTimeZone('Europe/Kyiv'));
+        $till = new \DateTime('now', new \DateTimeZone('Europe/Kyiv'));
 
         $dateTimeRange = new DateTimeRange($since, $till);
 
-        $this->assertEquals('Europe/Kiev', $dateTimeRange->getTimezone()->getName());
+        $this->assertEquals('Europe/Kyiv', $dateTimeRange->getTimezone()->getName());
     }
 
     #[Test]
     public function getTimezoneName(): void
     {
-        $since = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
-        $till = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+        $since = new \DateTime('now', new \DateTimeZone('Europe/Kyiv'));
+        $till = new \DateTime('now', new \DateTimeZone('Europe/Kyiv'));
 
         $dateTimeRange = new DateTimeRange($since, $till);
 
-        $this->assertEquals('Europe/Kiev', $dateTimeRange->getTimezoneName());
+        $this->assertEquals('Europe/Kyiv', $dateTimeRange->getTimezoneName());
     }
 
     #[Test]
@@ -99,8 +99,8 @@ class DateTimeRangeTest extends TestCase
             new \DateTime('2000-01-01 21:00:00', new \DateTimeZone('UTC'))
         );
         $dateTimeRange6 = new DateTimeRange(
-            new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('Europe/Kiev')),
-            new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('Europe/Kiev'))
+            new \DateTime('2000-01-01 14:45:00', new \DateTimeZone('Europe/Kyiv')),
+            new \DateTime('2000-01-01 15:00:00', new \DateTimeZone('Europe/Kyiv'))
         );
 
         $this->assertTrue($dateTimeRange1->isEqual($dateTimeRange2), 'Since/till timezones are same, time is same');
@@ -372,8 +372,8 @@ class DateTimeRangeTest extends TestCase
             new \DateTime('2000-01-01 21:00:00', new \DateTimeZone('UTC'))
         );
         $dateRange2 = new DateTimeRange(
-            new \DateTime('2000-01-01 21:00:00', new \DateTimeZone('Europe/Kiev')),
-            new \DateTime('2000-01-01 23:00:00', new \DateTimeZone('Europe/Kiev'))
+            new \DateTime('2000-01-01 21:00:00', new \DateTimeZone('Europe/Kyiv')),
+            new \DateTime('2000-01-01 23:00:00', new \DateTimeZone('Europe/Kyiv'))
         );
 
         $this->expectException(LogicException::class);

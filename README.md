@@ -41,10 +41,10 @@ use Fresh\DateTime\DateTimeHelper;
 $dateTimeHelper = new DateTimeHelper();
 
 $now1 = $dateTimeHelper->getCurrentDatetime();
-$now2 = $dateTimeHelper->getCurrentDatetime(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
+$now2 = $dateTimeHelper->getCurrentDatetime(new \DateTimeZone('Europe/Kyiv')); // Or with custom timezone
 $now3 = $dateTimeHelper->getCurrentDatetimeUtc(); // Always in UTC
 $now4 = $dateTimeHelper->getCurrentDatetimeImmutable();
-$now5 = $dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kiev')); // Or with custom timezone
+$now5 = $dateTimeHelper->getCurrentDatetimeImmutable(new \DateTimeZone('Europe/Kyiv')); // Or with custom timezone
 $now6 = $dateTimeHelper->getCurrentDatetimeImmutableUtc(); // Always in UTC
 ```
 
@@ -69,6 +69,24 @@ $timestamp = $dateTimeHelper->getCurrentTimestamp();
 
 ```
 
+### Method for creation \DateTime or \DateTimeImmutable from format
+
+```php
+use Fresh\DateTime\DateTimeHelper;
+
+$dateTimeHelper = new DateTimeHelper();
+
+// By default with format Y-m-d H:i:s and UTC timezone
+$dateTime = $dateTimeHelper->createDateTimeFromFormat('2000-01-01 00:00:00');
+$dateTimeImmutable = $dateTimeHelper->createDateTimeImmutableFromFormat('2000-01-01 00:00:00');
+
+// With custom format
+$dateTime = $dateTimeHelper->createDateTimeFromFormat('01.01.2000 00:00:00', 'd.m.Y H:i:s');
+
+// With custom timezone
+$dateTime = $dateTimeHelper->createDateTimeFromFormat('01.01.2000 00:00:00', 'd.m.Y H:i:s', new \DateTimeZone('Europe/Kyiv'));
+```
+
 ### Method for creating `\DateTimeZone` object
 
 If you create a `\DateTimeZone` object directly in your code, you will not be able to mock it in tests.
@@ -80,7 +98,7 @@ use Fresh\DateTime\DateTimeHelper;
 $dateTimeHelper = new DateTimeHelper();
 
 $dateTimeZone1 = $dateTimeHelper->createDateTimeZone(); // UTC by default
-$dateTimeZone2 = $dateTimeHelper->createDateTimeZone('Europe/Kiev'); // Or with custom timezone
+$dateTimeZone2 = $dateTimeHelper->createDateTimeZone('Europe/Kyiv'); // Or with custom timezone
 $dateTimeZone3 = $dateTimeHelper->createDateTimeZoneUtc(); // Another method to get UTC timezone
 ```
 
@@ -95,7 +113,7 @@ This library provides a `DateRange` immutable class, which is not able to be cha
 use Fresh\DateTime\DateRange;
 
 $dateRange1 = new DateRange(new \DateTime('yesterday'), new \DateTime('tomorrow'));
-$dateRange2 = new DateRange(new \DateTime('yesterday'), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kiev')));
+$dateRange2 = new DateRange(new \DateTime('yesterday'), new \DateTime('tomorrow', new \DateTimeZone('Europe/Kyiv')));
 
 // There is also the `isEqual` method to compare two DateRange objects.
 $dateRange1->isEqual($dateRange2); // Returns FALSE, because date ranges have different timezones
@@ -109,7 +127,7 @@ This library provides  also immutable class `DateTimeRange`, instead of `DateRan
 use Fresh\DateTime\DateTimeRange;
 
 $dateTimeRange1 = new DateTimeRange(new \DateTime('2000-01-01 19:00:00'), new \DateTime('2000-01-01 21:00:00'));
-$dateTimeRange2 = new DateTimeRange(new \DateTime('2000-01-01 19:00:00'), new \DateTime('2000-01-01 21:00:00', new \DateTimeZone('Europe/Kiev')));
+$dateTimeRange2 = new DateTimeRange(new \DateTime('2000-01-01 19:00:00'), new \DateTime('2000-01-01 21:00:00', new \DateTimeZone('Europe/Kyiv')));
 $dateTimeRange3 = new DateTimeRange(new \DateTime('2000-01-01 20:00:00'), new \DateTime('2000-01-01 22:00:00'));
 
 // There is also the `isEqual` method to compare two DateTimeRange objects.

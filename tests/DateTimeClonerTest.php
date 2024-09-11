@@ -27,7 +27,7 @@ class DateTimeClonerTest extends TestCase
     #[Test]
     public function cloneIntoDateTime(): void
     {
-        $datetime = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+        $datetime = new \DateTime('now', new \DateTimeZone('Europe/Kyiv'));
         $clonedDateTime = DateTimeCloner::cloneIntoDateTime($datetime);
 
         $this->assertInstanceOf(\DateTime::class, $clonedDateTime);
@@ -59,7 +59,7 @@ class DateTimeClonerTest extends TestCase
     #[Test]
     public function cloneIntoDateTimeImmutable(): void
     {
-        $datetime = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
+        $datetime = new \DateTime('now', new \DateTimeZone('Europe/Kyiv'));
         $cloneIntoDateTimeImmutable = DateTimeCloner::cloneIntoDateTimeImmutable($datetime);
 
         $this->assertInstanceOf(\DateTimeImmutable::class, $cloneIntoDateTimeImmutable);
