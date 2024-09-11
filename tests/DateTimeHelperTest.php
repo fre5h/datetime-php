@@ -173,38 +173,38 @@ class DateTimeHelperTest extends TestCase
     public static function dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings(): \Generator
     {
         yield 'UTC three days' => [
-            'timezone_name' => 'UTC',
+            'timezoneZoneName' => 'UTC',
             'since' => '2000-01-01',
             'till' => '2000-01-03',
-            'dates' => ['2000-01-01', '2000-01-02', '2000-01-03'],
+            'expectedDates' => ['2000-01-01', '2000-01-02', '2000-01-03'],
         ];
 
         yield 'CET three days' => [
-            'timezone_name' => 'Europe/Berlin',
+            'timezoneZoneName' => 'Europe/Berlin',
             'since' => '2000-01-01',
             'till' => '2000-01-03',
-            'dates' => ['2000-01-01', '2000-01-02', '2000-01-03'],
+            'expectedDates' => ['2000-01-01', '2000-01-02', '2000-01-03'],
         ];
 
         yield 'CET three days cross months' => [
-            'timezone_name' => 'Europe/Berlin',
+            'timezoneZoneName' => 'Europe/Berlin',
             'since' => '2000-02-28',
             'till' => '2000-03-02',
-            'dates' => ['2000-02-28', '2000-02-29', '2000-03-01', '2000-03-02'],
+            'expectedDates' => ['2000-02-28', '2000-02-29', '2000-03-01', '2000-03-02'],
         ];
 
         yield 'UTC one day' => [
-            'timezone_name' => 'UTC',
+            'timezoneZoneName' => 'UTC',
             'since' => '2000-01-01',
             'till' => '2000-01-01',
-            'dates' => ['2000-01-01'],
+            'expectedDates' => ['2000-01-01'],
         ];
 
         yield 'CET one day' => [
-            'timezone_name' => 'Europe/Berlin',
+            'timezoneZoneName' => 'Europe/Berlin',
             'since' => '2000-01-01',
             'till' => '2000-01-01',
-            'dates' => ['2000-01-01'],
+            'expectedDates' => ['2000-01-01'],
         ];
     }
 
