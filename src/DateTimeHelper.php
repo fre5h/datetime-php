@@ -21,7 +21,7 @@ use Psr\Clock\ClockInterface;
  */
 class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
 {
-    private const INTERNAL_DATE_FORMAT = 'Y-m-d';
+    private const string INTERNAL_DATE_FORMAT = 'Y-m-d';
 
     /** @var array<string, \DateTimeInterface[]> */
     private array $datesCache = [];
@@ -153,7 +153,7 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
             $since->format(self::INTERNAL_DATE_FORMAT),
             $since->getTimezone()->getName(),
             $till->format(self::INTERNAL_DATE_FORMAT),
-            $till->getTimezone()->getName()
+            $till->getTimezone()->getName(),
         );
     }
 }

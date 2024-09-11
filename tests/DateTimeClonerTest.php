@@ -14,6 +14,7 @@ namespace Fresh\DateTime\Tests;
 
 use Fresh\DateTime\DateTimeCloner;
 use Fresh\DateTime\Exception\UnexpectedValueException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,17 +24,19 @@ use PHPUnit\Framework\TestCase;
  */
 class DateTimeClonerTest extends TestCase
 {
-    public function testCloneIntoDateTime(): void
+    #[Test]
+    public function cloneIntoDateTime(): void
     {
         $datetime = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
         $clonedDateTime = DateTimeCloner::cloneIntoDateTime($datetime);
 
-        self::assertInstanceOf(\DateTime::class, $clonedDateTime);
-        self::assertSame($datetime->getTimezone()->getName(), $clonedDateTime->getTimezone()->getName());
-        self::assertSame($datetime->format('Y-m-d'), $clonedDateTime->format('Y-m-d'));
+        $this->assertInstanceOf(\DateTime::class, $clonedDateTime);
+        $this->assertSame($datetime->getTimezone()->getName(), $clonedDateTime->getTimezone()->getName());
+        $this->assertSame($datetime->format('Y-m-d'), $clonedDateTime->format('Y-m-d'));
     }
 
-    public function testCloneIntoDateTimeWithException(): void
+    #[Test]
+    public function coneIntoDateTimeWithException(): void
     {
         $datetime = $this->createMock(\DateTime::class);
         $datetime
@@ -53,17 +56,19 @@ class DateTimeClonerTest extends TestCase
         DateTimeCloner::cloneIntoDateTime($datetime);
     }
 
-    public function testCloneIntoDateTimeImmutable(): void
+    #[Test]
+    public function cloneIntoDateTimeImmutable(): void
     {
         $datetime = new \DateTime('now', new \DateTimeZone('Europe/Kiev'));
         $cloneIntoDateTimeImmutable = DateTimeCloner::cloneIntoDateTimeImmutable($datetime);
 
-        self::assertInstanceOf(\DateTimeImmutable::class, $cloneIntoDateTimeImmutable);
-        self::assertSame($datetime->getTimezone()->getName(), $cloneIntoDateTimeImmutable->getTimezone()->getName());
-        self::assertSame($datetime->format('Y-m-d'), $cloneIntoDateTimeImmutable->format('Y-m-d'));
+        $this->assertInstanceOf(\DateTimeImmutable::class, $cloneIntoDateTimeImmutable);
+        $this->assertSame($datetime->getTimezone()->getName(), $cloneIntoDateTimeImmutable->getTimezone()->getName());
+        $this->assertSame($datetime->format('Y-m-d'), $cloneIntoDateTimeImmutable->format('Y-m-d'));
     }
 
-    public function testCloneIntoDateTimeImmutableWithException(): void
+    #[Test]
+    public function cloneIntoDateTimeImmutableWithException(): void
     {
         $datetime = $this->createMock(\DateTimeImmutable::class);
         $datetime

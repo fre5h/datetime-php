@@ -21,7 +21,7 @@ use Fresh\DateTime\Exception\UnexpectedValueException;
  */
 class DateTimeCloner
 {
-    private const DATE_FORMAT_FOR_CLONE = 'Y-m-d H:i:s e';
+    private const string DATE_FORMAT_FOR_CLONE = 'Y-m-d H:i:s e';
 
     /**
      * @param \DateTimeInterface $originalDate
