@@ -16,6 +16,7 @@ use Fresh\DateTime\DateRangeInterface;
 use Fresh\DateTime\DateTimeHelper;
 use Fresh\DateTime\DateTimeHelperInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -42,12 +43,14 @@ class DateTimeHelperTest extends TestCase
         );
     }
 
-    public function testConstructor(): void
+    #[Test]
+    public function constructor(): void
     {
         self::assertInstanceOf(DateTimeHelperInterface::class, $this->dateTimeHelper);
     }
 
-    public function testCreateDateTimeZone(): void
+    #[Test]
+    public function createDateTimeZone(): void
     {
         $timezone = $this->dateTimeHelper->createDateTimeZone();
         self::assertInstanceOf(\DateTimeZone::class, $timezone);
@@ -57,7 +60,8 @@ class DateTimeHelperTest extends TestCase
         self::assertInstanceOf(\DateTimeZone::class, $timezone);
     }
 
-    public function testCreateDateTimeZoneUtc(): void
+    #[Test]
+    public function createDateTimeZoneUtc(): void
     {
         $timezone1 = $this->dateTimeHelper->createDateTimeZoneUtc();
         self::assertInstanceOf(\DateTimeZone::class, $timezone1);
@@ -70,13 +74,15 @@ class DateTimeHelperTest extends TestCase
         self::assertEquals($timezone1, $timezone2);
     }
 
-    public function testGetCurrentTimestamp(): void
+    #[Test]
+    public function getCurrentTimestamp(): void
     {
         $timestamp = $this->dateTimeHelper->getCurrentTimestamp();
         self::assertIsInt($timestamp);
     }
 
-    public function testGetCurrentDatetime(): void
+    #[Test]
+    public function getCurrentDatetime(): void
     {
         $now = $this->dateTimeHelper->getCurrentDatetime();
         self::assertInstanceOf(\DateTime::class, $now);
@@ -86,14 +92,16 @@ class DateTimeHelperTest extends TestCase
         self::assertSame('Europe/Kiev', $now->getTimezone()->getName());
     }
 
-    public function testGetCurrentDatetimeUtc(): void
+    #[Test]
+    public function getCurrentDatetimeUtc(): void
     {
         $now = $this->dateTimeHelper->getCurrentDatetimeUtc();
         self::assertInstanceOf(\DateTime::class, $now);
         self::assertSame('UTC', $now->getTimezone()->getName());
     }
 
-    public function testGetCurrentDatetimeImmutable(): void
+    #[Test]
+    public function getCurrentDatetimeImmutable(): void
     {
         $now = $this->dateTimeHelper->getCurrentDatetimeImmutable();
         self::assertInstanceOf(\DateTimeImmutable::class, $now);
@@ -103,14 +111,16 @@ class DateTimeHelperTest extends TestCase
         self::assertSame('Europe/Kiev', $now->getTimezone()->getName());
     }
 
-    public function testNow(): void
+    #[Test]
+    public function now(): void
     {
         $now = $this->dateTimeHelper->now();
         self::assertInstanceOf(\DateTimeImmutable::class, $now);
         self::assertSame('UTC', $now->getTimezone()->getName());
     }
 
-    public function testGetCurrentDatetimeImmutableUtc(): void
+    #[Test]
+    public function getCurrentDatetimeImmutableUtc(): void
     {
         $now = $this->dateTimeHelper->getCurrentDatetimeImmutableUtc();
         self::assertInstanceOf(\DateTimeImmutable::class, $now);
@@ -209,7 +219,8 @@ class DateTimeHelperTest extends TestCase
         ];
     }
 
-    public function testDatesCache(): void
+    #[Test]
+    public function datesCache(): void
     {
         $expectedDates = ['2000-01-01', '2000-01-02', '2000-01-03'];
 
