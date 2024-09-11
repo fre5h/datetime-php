@@ -262,7 +262,7 @@ class DateTimeHelperTest extends TestCase
     public function createDateTimeImmutableFromFormatWithDefaultTimezone(): void
     {
         $dateTime = $this->dateTimeHelper->createDateTimeImmutableFromFormat(dateTimeAsString: '2000-01-01 00:00:00');
-        $this->assertInstanceOf(\DateTime::class, $dateTime);
+        $this->assertInstanceOf(\DateTimeImmutable::class, $dateTime);
         $this->assertSame('UTC', $dateTime->getTimezone()->getName());
     }
 
@@ -270,7 +270,7 @@ class DateTimeHelperTest extends TestCase
     public function createDateTimeImmutableFromFormatWithCustomTimezone(): void
     {
         $dateTime = $this->dateTimeHelper->createDateTimeImmutableFromFormat(dateTimeAsString: '2000-01-01 00:00:00', timeZone: new \DateTimeZone('Europe/Berlin'));
-        $this->assertInstanceOf(\DateTime::class, $dateTime);
+        $this->assertInstanceOf(\DateTimeImmutable::class, $dateTime);
         $this->assertSame('Europe/Berlin', $dateTime->getTimezone()->getName());
     }
 
