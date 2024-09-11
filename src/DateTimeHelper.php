@@ -159,6 +159,24 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function createDateTimeImmutableFromFormat(string $dateTimeAsString, string $dateFormat = self::INTERNAL_DATETIME_FORMAT, ?\DateTimeZone $timeZone = null): \DateTimeImmutable
+    {
+        if ($timeZone instanceof \DateTimeZone) {
+            $result = \DateTimeImmutable::createFromFormat($dateFormat, $dateTimeAsString, $timeZone);
+        } else {
+            $result = \DateTimeImmutable::createFromFormat($dateFormat, $dateTimeAsString, $this->createDateTimeZoneUtc());
+        }
+
+        if (!$result instanceof \DateTimeImmutable) {
+            throw new InvalidArgumentException(\sprintf('Could not create a \DateTimeImmutable object from string "%s" from format "%s".', $dateTimeAsString, $dateFormat));
+        }
+
+        return $result;
+    }
+
+    /**
      * @param DateRangeInterface $dateRange
      *
      * @return string

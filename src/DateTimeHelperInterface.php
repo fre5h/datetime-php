@@ -91,4 +91,15 @@ interface DateTimeHelperInterface
      * @return \DateTime
      */
     public function createDateTimeFromFormat(string $dateTimeAsString, string $dateFormat, ?\DateTimeZone $timeZone = null): \DateTime;
+
+    /**
+     * @param string             $dateTimeAsString
+     * @param string             $dateFormat
+     * @param \DateTimeZone|null $timeZone
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return \DateTimeImmutable
+     */
+    public function createDateTimeImmutableFromFormat(string $dateTimeAsString, string $dateFormat, ?\DateTimeZone $timeZone = null): \DateTimeImmutable;
 }

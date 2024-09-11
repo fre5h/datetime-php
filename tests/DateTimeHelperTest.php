@@ -243,7 +243,7 @@ class DateTimeHelperTest extends TestCase
     #[Test]
     public function createDateTimeFromFormatWithCustomTimezone(): void
     {
-        $dateTime = $this->dateTimeHelper->createDateTimeFromFormat(dateTimeAsString: '2000-01-01 00:00:00', timezone: new \DateTimeZone('Europe/Berlin'));
+        $dateTime = $this->dateTimeHelper->createDateTimeFromFormat(dateTimeAsString: '2000-01-01 00:00:00', timeZone: new \DateTimeZone('Europe/Berlin'));
         $this->assertInstanceOf(\DateTime::class, $dateTime);
         $this->assertSame('Europe/Berlin', $dateTime->getTimezone()->getName());
     }
@@ -255,6 +255,32 @@ class DateTimeHelperTest extends TestCase
         $this->expectExceptionMessage('Could not create a \DateTime object from string "fake" from format "Y-m-d H:i:s".');
 
 
-        $dateTime = $this->dateTimeHelper->createDateTimeFromFormat(dateTimeAsString: 'fake');
+        $this->dateTimeHelper->createDateTimeFromFormat(dateTimeAsString: 'fake');
+    }
+
+    #[Test]
+    public function createDateTimeImmutableFromFormatWithDefaultTimezone(): void
+    {
+        $dateTime = $this->dateTimeHelper->createDateTimeImmutableFromFormat(dateTimeAsString: '2000-01-01 00:00:00');
+        $this->assertInstanceOf(\DateTime::class, $dateTime);
+        $this->assertSame('UTC', $dateTime->getTimezone()->getName());
+    }
+
+    #[Test]
+    public function createDateTimeImmutableFromFormatWithCustomTimezone(): void
+    {
+        $dateTime = $this->dateTimeHelper->createDateTimeImmutableFromFormat(dateTimeAsString: '2000-01-01 00:00:00', timeZone: new \DateTimeZone('Europe/Berlin'));
+        $this->assertInstanceOf(\DateTime::class, $dateTime);
+        $this->assertSame('Europe/Berlin', $dateTime->getTimezone()->getName());
+    }
+
+    #[Test]
+    public function createDateTimeImmutableFromFormatWithException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Could not create a \DateTime object from string "fake" from format "Y-m-d H:i:s".');
+
+
+        $this->dateTimeHelper->createDateTimeImmutableFromFormat(dateTimeAsString: 'fake');
     }
 }
