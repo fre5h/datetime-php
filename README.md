@@ -69,7 +69,7 @@ $timestamp = $dateTimeHelper->getCurrentTimestamp();
 
 ```
 
-### Method for creation \DateTime or \DateTimeImmutable from format
+### Method for creating `\DateTime` or `\DateTimeImmutable` from format
 
 ```php
 use Fresh\DateTime\DateTimeHelper;
