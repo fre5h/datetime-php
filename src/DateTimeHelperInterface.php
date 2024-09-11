@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Fresh\DateTime;
 
+use Fresh\DateTime\Exception\InvalidArgumentException;
 use Fresh\DateTime\Exception\UnexpectedValueException;
 
 /**
@@ -79,4 +80,26 @@ interface DateTimeHelperInterface
      * @return string[]
      */
     public function getDatesFromDateRangeAsArrayOfStrings(DateRangeInterface $dateRange): array;
+
+    /**
+     * @param string             $dateTimeAsString
+     * @param string             $dateFormat
+     * @param \DateTimeZone|null $timeZone
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return \DateTime
+     */
+    public function createDateTimeFromFormat(string $dateTimeAsString, string $dateFormat, ?\DateTimeZone $timeZone = null): \DateTime;
+
+    /**
+     * @param string             $dateTimeAsString
+     * @param string             $dateFormat
+     * @param \DateTimeZone|null $timeZone
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return \DateTimeImmutable
+     */
+    public function createDateTimeImmutableFromFormat(string $dateTimeAsString, string $dateFormat, ?\DateTimeZone $timeZone = null): \DateTimeImmutable;
 }
