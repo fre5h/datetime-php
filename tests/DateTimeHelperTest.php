@@ -173,35 +173,35 @@ class DateTimeHelperTest extends TestCase
     public static function dataProviderForTestGetDatesFromDateRangeAsArrayOfStrings(): \Generator
     {
         yield 'UTC three days' => [
-            'timezoneZoneName' => 'UTC',
+            'timeZoneName' => 'UTC',
             'since' => '2000-01-01',
             'till' => '2000-01-03',
             'expectedDates' => ['2000-01-01', '2000-01-02', '2000-01-03'],
         ];
 
         yield 'CET three days' => [
-            'timezoneZoneName' => 'Europe/Berlin',
+            'timeZoneName' => 'Europe/Berlin',
             'since' => '2000-01-01',
             'till' => '2000-01-03',
             'expectedDates' => ['2000-01-01', '2000-01-02', '2000-01-03'],
         ];
 
         yield 'CET three days cross months' => [
-            'timezoneZoneName' => 'Europe/Berlin',
+            'timeZoneName' => 'Europe/Berlin',
             'since' => '2000-02-28',
             'till' => '2000-03-02',
             'expectedDates' => ['2000-02-28', '2000-02-29', '2000-03-01', '2000-03-02'],
         ];
 
         yield 'UTC one day' => [
-            'timezoneZoneName' => 'UTC',
+            'timeZoneName' => 'UTC',
             'since' => '2000-01-01',
             'till' => '2000-01-01',
             'expectedDates' => ['2000-01-01'],
         ];
 
         yield 'CET one day' => [
-            'timezoneZoneName' => 'Europe/Berlin',
+            'timeZoneName' => 'Europe/Berlin',
             'since' => '2000-01-01',
             'till' => '2000-01-01',
             'expectedDates' => ['2000-01-01'],
