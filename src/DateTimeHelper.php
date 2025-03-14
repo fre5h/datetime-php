@@ -177,6 +177,34 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function createDateTimeImmutableFromTimestamp(int $timestamp): \DateTimeImmutable
+    {
+        $result = \DateTimeImmutable::createFromFormat('U', (string) $timestamp);
+
+        if (!$result instanceof \DateTimeImmutable) {
+            throw new InvalidArgumentException(\sprintf('Could not create a \DateTimeImmutable object from string "%s" from format "%s".', (string) $timestamp, 'U'));
+        }
+
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createDateTimeFromTimestamp(int $timestamp): \DateTime
+    {
+        $result = \DateTime::createFromFormat('U', (string) $timestamp);
+
+        if (!$result instanceof \DateTime) {
+            throw new InvalidArgumentException(\sprintf('Could not create a \DateTime object from string "%s" from format "%s".', (string) $timestamp, 'U'));
+        }
+
+        return $result;
+    }
+
+    /**
      * @param DateRangeInterface $dateRange
      *
      * @return string
