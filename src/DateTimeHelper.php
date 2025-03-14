@@ -204,16 +204,6 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
         return $result;
     }
 
-    public function toImmutable(\DateTime $dateTime): \DateTimeImmutable
-    {
-        return \DateTimeImmutable::createFromMutable($dateTime);
-    }
-
-    public function toMutable(\DateTimeImmutable $dateTimeImmutable): \DateTime
-    {
-        return \DateTime::createFromImmutable($dateTimeImmutable);
-    }
-
     /**
      * @param DateRangeInterface $dateRange
      *
