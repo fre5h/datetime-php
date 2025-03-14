@@ -318,7 +318,7 @@ class DateTimeHelperTest extends TestCase
 
         $this->assertInstanceOf(\DateTime::class, $dateTime);
 
-        $this->assertSame(0, $dateTime->getOffset()); // UTC повинен мати офсет 0
+        $this->assertSame(0, $dateTime->getOffset());
 
         $expectedTimezone = date_default_timezone_get();
         $this->assertContains($dateTime->getTimezone()->getName(), [$expectedTimezone, '+00:00']);
