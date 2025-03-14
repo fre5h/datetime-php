@@ -20,6 +20,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 /**
  * DateTimeHelperTest.
@@ -33,6 +34,7 @@ class DateTimeHelperTest extends TestCase
 
     protected function setUp(): void
     {
+        date_default_timezone_set('UTC');
         $this->dateRange = $this->createMock(DateRangeInterface::class);
         $this->dateTimeHelper = new DateTimeHelper();
     }
@@ -282,5 +284,53 @@ class DateTimeHelperTest extends TestCase
 
 
         $this->dateTimeHelper->createDateTimeImmutableFromFormat(dateTimeAsString: 'fake');
+    }
+
+    #[Test]
+    public function createDateTimeImmutableFromTimestamp(): void
+    {
+        $timestamp = 1710183600;
+        $dateTimeImmutable = $this->dateTimeHelper->createDateTimeImmutableFromTimestamp($timestamp);
+
+        $this->assertInstanceOf(\DateTimeImmutable::class, $dateTimeImmutable);
+
+        $this->assertSame(0, $dateTimeImmutable->getOffset());
+
+        $expectedTimezone = date_default_timezone_get();
+        $this->assertContains($dateTimeImmutable->getTimezone()->getName(), [$expectedTimezone, '+00:00']);
+
+        $expectedDateTime = new \DateTimeImmutable('@' . $timestamp, new \DateTimeZone($expectedTimezone));
+        $this->assertSame($expectedDateTime->format('Y-m-d H:i:s'), $dateTimeImmutable->format('Y-m-d H:i:s'));
+    }
+
+    #[Test]
+    public function createDateTimeImmutableFromInvalidTimestamp(): void
+    {
+        $this->expectException(TypeError::class);
+        $this->dateTimeHelper->createDateTimeImmutableFromTimestamp(999999999999999999999999999);
+    }
+
+    #[Test]
+    public function createDateTimeFromTimestamp(): void
+    {
+        $timestamp = 1710183600; // 2024-03-11 12:00:00 UTC
+        $dateTime = $this->dateTimeHelper->createDateTimeFromTimestamp($timestamp);
+
+        $this->assertInstanceOf(\DateTime::class, $dateTime);
+
+        $this->assertSame(0, $dateTime->getOffset()); // UTC повинен мати офсет 0
+
+        $expectedTimezone = date_default_timezone_get();
+        $this->assertContains($dateTime->getTimezone()->getName(), [$expectedTimezone, '+00:00']);
+
+        $expectedDateTime = new \DateTimeImmutable('@' . $timestamp, new \DateTimeZone($expectedTimezone));
+        $this->assertSame($expectedDateTime->format('Y-m-d H:i:s'), $dateTime->format('Y-m-d H:i:s'));
+    }
+
+    #[Test]
+    public function createDateTimeFromInvalidTimestamp(): void
+    {
+        $this->expectException(TypeError::class);
+        $this->dateTimeHelper->createDateTimeFromTimestamp(999999999999999999999999999);
     }
 }
