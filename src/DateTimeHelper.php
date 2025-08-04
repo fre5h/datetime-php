@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the DateTime library.
  *
@@ -115,7 +116,7 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
             $datesAsObjects = [];
             $period = new \DatePeriod($since, new \DateInterval('P1D'), $till);
             foreach ($period as $date) {
-                /** @var \DateTimeInterface $date */
+                /** @var \DateTime $date */
                 $datesAsObjects[] = $date;
             }
 
