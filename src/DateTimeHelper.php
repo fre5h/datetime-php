@@ -22,8 +22,8 @@ use Psr\Clock\ClockInterface;
  */
 class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
 {
-    private const string INTERNAL_DATE_FORMAT = 'Y-m-d';
-    private const string INTERNAL_DATETIME_FORMAT = 'Y-m-d H:i:s';
+    protected const string INTERNAL_DATE_FORMAT = 'Y-m-d';
+    protected const string INTERNAL_DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /** @var array<string, \DateTimeInterface[]> */
     private array $datesCache = [];
@@ -184,7 +184,7 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
         $result = \DateTimeImmutable::createFromFormat('U', (string) $timestamp);
 
         if (!$result instanceof \DateTimeImmutable) {
-            throw new InvalidArgumentException(\sprintf('Could not create a \DateTimeImmutable object from string "%s" from format "%s".', (string) $timestamp, 'U'));
+            throw new InvalidArgumentException(\sprintf('Could not create a \DateTimeImmutable object from string "%s" from format "%s".', (string) $timestamp, 'U')); // @codeCoverageIgnore
         }
 
         return $result;
@@ -198,7 +198,7 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
         $result = \DateTime::createFromFormat('U', (string) $timestamp);
 
         if (!$result instanceof \DateTime) {
-            throw new InvalidArgumentException(\sprintf('Could not create a \DateTime object from string "%s" from format "%s".', (string) $timestamp, 'U'));
+            throw new InvalidArgumentException(\sprintf('Could not create a \DateTime object from string "%s" from format "%s".', (string) $timestamp, 'U')); // @codeCoverageIgnore
         }
 
         return $result;
