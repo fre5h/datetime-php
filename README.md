@@ -13,7 +13,7 @@ PHP library that provides additional functions for processing dates & times. ğŸ
 
 ## Requirements
 
-* PHP 8.3
+* PHP 8.4
 
 ## Installation ğŸŒ±
 
