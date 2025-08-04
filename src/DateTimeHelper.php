@@ -27,9 +27,9 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
     protected const string INTERNAL_DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /** @var array<string, \DateTimeInterface[]> */
-    private array $datesCache = [];
+    protected array $datesCache = [];
 
-    private ?\DateTimeZone $timeZoneUtc = null;
+    protected ?\DateTimeZone $timeZoneUtc = null;
 
     /**
      * {@inheritdoc}

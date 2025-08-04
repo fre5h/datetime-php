@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the DateTime library.
  *
@@ -21,7 +22,7 @@ use Fresh\DateTime\Exception\UnexpectedValueException;
  */
 class DateTimeCloner
 {
-    private const string DATE_FORMAT_FOR_CLONE = 'Y-m-d H:i:s e';
+    protected const string DATE_FORMAT_FOR_CLONE = 'Y-m-d H:i:s e';
 
     /**
      * @param \DateTimeInterface $originalDate
