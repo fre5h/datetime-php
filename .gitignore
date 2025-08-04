@@ -1,1 +1,31 @@
 /vendor/
+.phpunit.result.cache
+composer.lock
+.phpcs-cache
+.php-cs-fixer.cache
+clover-coverage.xml
+coverage.cobertura.xml
+junit.xml
+html-coverage/
+phpunit-coverage.xml
+var/*
+
+###> PhpStrom Shared Project Settings ###
+.idea/*
+.idea/dataSources/*
+.idea/httpRequests/*
+!.idea/datetime-php.iml
+!.idea/encodings.xml
+!.idea/icon.svg
+!.idea/inspectionProfiles
+!.idea/markdown.xml
+!.idea/modules.xml
+!.idea/php-docker-settings.xml
+!.idea/php-test-framework.xml
+!.idea/php.xml
+!.idea/phpunit.xml
+!.idea/runConfigurations
+!.idea/scopes
+!.idea/symfony2.xml
+!.idea/webResources.xml
+###< PhpStrom Shared Project Settings ###

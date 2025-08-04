@@ -1,0 +1,11 @@
+services:
+  datetime_php:
+    container_name: "datetime_php"
+    image: datetime-php:1.0
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/var/www/bundle

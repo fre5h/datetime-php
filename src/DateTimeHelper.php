@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the DateTime library.
  *
@@ -22,13 +23,13 @@ use Psr\Clock\ClockInterface;
  */
 class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
 {
-    private const string INTERNAL_DATE_FORMAT = 'Y-m-d';
-    private const string INTERNAL_DATETIME_FORMAT = 'Y-m-d H:i:s';
+    protected const string INTERNAL_DATE_FORMAT = 'Y-m-d';
+    protected const string INTERNAL_DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /** @var array<string, \DateTimeInterface[]> */
-    private array $datesCache = [];
+    protected array $datesCache = [];
 
-    private ?\DateTimeZone $timeZoneUtc = null;
+    protected ?\DateTimeZone $timeZoneUtc = null;
 
     /**
      * {@inheritdoc}
@@ -115,7 +116,7 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
             $datesAsObjects = [];
             $period = new \DatePeriod($since, new \DateInterval('P1D'), $till);
             foreach ($period as $date) {
-                /** @var \DateTimeInterface $date */
+                /** @var \DateTime $date */
                 $datesAsObjects[] = $date;
             }
 
@@ -184,7 +185,7 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
         $result = \DateTimeImmutable::createFromFormat('U', (string) $timestamp);
 
         if (!$result instanceof \DateTimeImmutable) {
-            throw new InvalidArgumentException(\sprintf('Could not create a \DateTimeImmutable object from string "%s" from format "%s".', (string) $timestamp, 'U'));
+            throw new InvalidArgumentException(\sprintf('Could not create a \DateTimeImmutable object from string "%s" from format "%s".', (string) $timestamp, 'U')); // @codeCoverageIgnore
         }
 
         return $result;
@@ -198,7 +199,7 @@ class DateTimeHelper implements ClockInterface, DateTimeHelperInterface
         $result = \DateTime::createFromFormat('U', (string) $timestamp);
 
         if (!$result instanceof \DateTime) {
-            throw new InvalidArgumentException(\sprintf('Could not create a \DateTime object from string "%s" from format "%s".', (string) $timestamp, 'U'));
+            throw new InvalidArgumentException(\sprintf('Could not create a \DateTime object from string "%s" from format "%s".', (string) $timestamp, 'U')); // @codeCoverageIgnore
         }
 
         return $result;
